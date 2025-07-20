@@ -4,6 +4,9 @@ import z from "zod";
 import { Form, FormControl, FormField, FormItem, FormLabel } from "../ui/form";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
+import { useLogin } from "@/hooks/useAuth";
+import { useQueryClient } from "@tanstack/react-query";
+import { Skeleton } from "../ui/skeleton";
 
 const formSchema = z.object({
   email: z.string().email({
@@ -21,18 +24,25 @@ export function LoginForm() {
     }
   });
 
-  const onSubmit = () => {
-    console.log("login");
+  const { mutate: login, isPending } = useLogin();
+
+  const onSubmit = (values: z.infer<typeof formSchema>) => {
+    login({
+      email: values.email,
+      password: values.password
+    });
   };
+
+  if (isPending) {
+    <Skeleton>
+      <h1 className="alert">LOading</h1>
+    </Skeleton>;
+  }
 
   return (
     <div>
       <Form {...form}>
-        <form
-          onSubmit={form.handleSubmit(onSubmit)}
-          className="space-y-4"
-          autoComplete="off"
-        >
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4" autoComplete="off">
           <FormField
             control={form.control}
             name="email"

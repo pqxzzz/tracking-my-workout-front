@@ -1,17 +1,11 @@
-import {
-  Form,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormControl,
-  FormDescription,
-  FormMessage
-} from "../ui/form";
+import { Form, FormField, FormItem, FormLabel, FormControl, FormDescription, FormMessage } from "../ui/form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
+import { useRegister } from "@/hooks/useAuth";
+import Link from "next/link";
 
 const formSchema = z
   .object({
@@ -37,19 +31,23 @@ export function RegisterForm() {
     }
   });
 
-  const onSubmit = () => {
-    console.log("hello world");
+  const { mutate, isPending, isError, error, isSuccess, data } = useRegister();
+
+  const onSubmit = (values: z.infer<typeof formSchema>) => {
+    mutate(
+      { email: values.email, password: values.password },
+      {
+        onSuccess: () => console.log("registrado com sucesso."),
+        onError: () => console.log("falha ao registrar")
+      }
+    );
   };
 
   return (
     <div className="py-5">
       <Form {...form}>
         {" "}
-        <form
-          onSubmit={form.handleSubmit(onSubmit)}
-          className="space-y-4"
-          autoComplete="off"
-        >
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4" autoComplete="off">
           <FormField
             control={form.control}
             name="email"
@@ -64,20 +62,16 @@ export function RegisterForm() {
               </FormItem>
             )}
           />
-          <div className="flex gap-5  items-end">
+          <div className="flex gap-5 flex-col md:flex-row  items-center">
             <FormField
               control={form.control}
               name="password"
               render={({ field }) => (
-                <FormItem>
+                <FormItem className="w-full">
                   <FormLabel>Password</FormLabel>
                   <FormMessage />
                   <FormControl>
-                    <Input
-                      {...field}
-                      placeholder={"password"}
-                      type={"password"}
-                    />
+                    <Input {...field} placeholder={"password"} type={"password"} />
                   </FormControl>
                   <FormDescription />
                 </FormItem>
@@ -87,15 +81,11 @@ export function RegisterForm() {
               control={form.control}
               name="confirmPassword"
               render={({ field }) => (
-                <FormItem className="flex flex-col justify-between">
+                <FormItem className="w-full flex flex-col justify-between">
                   <FormLabel>Confirm Password</FormLabel>
                   <FormMessage />
                   <FormControl>
-                    <Input
-                      {...field}
-                      placeholder={"password"}
-                      type={"password"}
-                    />
+                    <Input {...field} placeholder={"password"} type={"password"} />
                   </FormControl>
                   <FormDescription />
                 </FormItem>
@@ -106,7 +96,8 @@ export function RegisterForm() {
             <Button type="submit">
               <p>Create Account</p>
             </Button>
-            <Button variant={"link"}>
+
+            <Button variant={"link"} type="button">
               <p>Already have an account</p>
             </Button>
           </div>
