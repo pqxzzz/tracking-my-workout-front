@@ -3,6 +3,7 @@ import "./globals.css";
 import { Providers } from "./providers";
 import { AuthProvider } from "@/context/AuthContext";
 import { AuthGate } from "./AuthGate";
+import { Header } from "@/components/Header/Header";
 
 export const metadata: Metadata = {
   title: "tracking my workout",
@@ -19,7 +20,10 @@ export default function RootLayout({
       <body className={`antialiased dark`}>
         <Providers>
           <AuthProvider>
-            <AuthGate>{children}</AuthGate>
+            <AuthGate>
+              <Header />
+              {children}
+            </AuthGate>
           </AuthProvider>
         </Providers>
       </body>

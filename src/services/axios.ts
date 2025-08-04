@@ -8,7 +8,7 @@ export const api = axios.create({
 // TODO: conferir pra que serve isso... n entendi
 api.interceptors.request.use((config) => {
   const token = localStorage.getItem("access_token");
-  console.log("aaaa", token);
+  console.log("TOKEN AXIOS.TS: ", token);
   if (token) config.headers.Authorization = `Bearer ${token}`;
   return config;
 });

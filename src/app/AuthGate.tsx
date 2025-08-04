@@ -2,17 +2,21 @@
 import { Skeleton } from "@/components/ui/skeleton";
 import { AuthContext } from "@/context/AuthContext";
 import { useRouter } from "next/navigation";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 
 export function AuthGate({ children }: { children: React.ReactNode }) {
   const context = useContext(AuthContext);
   const router = useRouter();
 
-  if (!context || !context.token) {
-    router.push("/auth");
-  }
+  useEffect(() => {
+    if (context?.authReady && !context?.token) {
+      console.log("NAO TEM CONTEXTO ENTAO VAI PRA AUTH");
+      console.log(context);
+      router.push("/auth");
+    }
+  }, [context]);
 
-  if (context?.isLoading) {
+  if (!context?.authReady || context?.isLoading) {
     return (
       <Skeleton className="w-screen h-screen">
         <div className="w-full h-full flex items-center justify-center">

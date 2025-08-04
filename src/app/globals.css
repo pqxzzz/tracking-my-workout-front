@@ -44,7 +44,8 @@
 }
 
 body {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial,
+    sans-serif;
 }
 
 .basic-layout-mobile {
@@ -128,6 +129,10 @@ body {
   font-size: 32px;
   color: white;
   background-color: red;
+}
+
+span {
+  font-weight: bold;
 }
 
 @layer base {

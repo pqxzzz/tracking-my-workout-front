@@ -1,11 +1,18 @@
-import { Form, FormField, FormItem, FormLabel, FormControl, FormDescription, FormMessage } from "../ui/form";
+import {
+  Form,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormControl,
+  FormDescription,
+  FormMessage
+} from "../ui/form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { useRegister } from "@/hooks/useAuth";
-import Link from "next/link";
 
 const formSchema = z
   .object({
@@ -97,7 +104,7 @@ export function RegisterForm() {
               <p>Create Account</p>
             </Button>
 
-            <Button variant={"link"} type="button">
+            <Button variant={"link"} type="button" disabled={isPending}>
               <p>Already have an account</p>
             </Button>
           </div>

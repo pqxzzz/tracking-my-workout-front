@@ -11,6 +11,7 @@ type AuthContextType = {
   user: User | null;
   setUser: (user: User | null) => void;
   isLoading: boolean;
+  authReady: boolean;
 };
 
 //1* cria o context de autenticacao, vazio
@@ -20,7 +21,7 @@ export const AuthContext = createContext<AuthContextType | null>(null);
 //  mantem o estado geral de User e Token
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [token, setTokenState] = useState<string | null>(null);
-
+  const [authReady, setAuthReady] = useState(false);
   const [user, setUser] = useState<User | null>(null);
 
   const router = useRouter();
@@ -30,6 +31,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     const stored = localStorage.getItem("access_token");
     if (stored) setTokenState(stored);
+
+    setTimeout(() => setAuthReady(true), 0);
   }, []);
 
   const setToken = (newToken: string | null) => {
@@ -48,13 +51,14 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     error,
     failureCount
   } = useGetUser({
-    enabled: !token,
-    token
+    enabled: !!token
   });
 
   useEffect(() => {
+    console.log("user data atualizado useEffect context!");
     if (userData && token) setUser(userData);
     if (error) {
+      console.error(error);
       router.push("/auth");
       localStorage.removeItem("access_token");
       queryClient.removeQueries({ queryKey: ["access_token"] }); // Limpa o cache do token
@@ -64,9 +68,14 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     // TODO: QUANDO DA ERROR NAO TA TRIGGANDO
   }, [userData, token, error]);
 
+  // useEffect(() => {
+  //   //TODO: nao entendi mt bem
+  //   if (userData && token) setUser(userData);
+  // }, [userData, token, error]);
+
   return (
-    <AuthContext.Provider value={{ token, setToken, user, setUser, isLoading }}>
-      <h1 className="bg-red-400 text-white font-bold text-2xl">
+    <AuthContext.Provider value={{ token, setToken, user, setUser, isLoading, authReady }}>
+      <h1 className="bg-red-800 text-white font-bold text-2xl">
         {failureCount} -{error ? "teve erro" : "sem erro"}
       </h1>
       {children}

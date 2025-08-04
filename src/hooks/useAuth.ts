@@ -1,6 +1,13 @@
 // import { useAuthContext } from "@/context/AuthContext";
 import { AuthContext } from "@/context/AuthContext";
-import { getUserData, loginUser, RegisterDTO, registerUser, User } from "@/services/auth";
+import {
+  finishUserRegistration,
+  getUserData,
+  loginUser,
+  RegisterDTO,
+  registerUser,
+  User
+} from "@/services/auth";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { useContext } from "react";
@@ -41,7 +48,7 @@ export function useLogin() {
 
       //Busca dados do usuario
       const user = await getUserData();
-      // const user = await getUserData({ access_token: token.access_token });
+
       context.setUser(user);
       router.push("/");
     },
@@ -51,17 +58,33 @@ export function useLogin() {
   });
 }
 
+export function useFinishRegister() {
+  const queryClient = useQueryClient();
+
+  const mutation = useMutation({
+    mutationFn: finishUserRegistration,
+    onSuccess: (user) => {
+      console.log("USER FROM MUTATION: ", user);
+      queryClient.setQueryData(["currentUser"], user);
+
+      queryClient.invalidateQueries({ queryKey: ["currentUser"] }); // busca novamente as infos do user quando termina o cadastro
+    },
+    onError: (err) => {
+      console.error("error finishing registration: ", err);
+    }
+  });
+
+  return mutation;
+}
+
 // TODO: tirar esse hook daqui
-export function useGetUser({ enabled, token }: { enabled: boolean; token: string | null }) {
+export function useGetUser({ enabled }: { enabled: boolean }) {
   return useQuery({
     queryKey: ["currentUser"],
     queryFn: () => {
-      if (!token) {
-        throw new Error("No token available"); //TODO: duvida, nao teria q dar refetch nesse caso?
-      }
-      return getUserData(); // TODO: mudar isso ta feio
-      // return getUserData({ access_token: token }); // TODO: mudar isso ta feio
+      console.log("Foi buscado as informacoes do usuario!");
+      return getUserData();
     },
-    enabled // so executa quando tem token
+    enabled
   });
 }

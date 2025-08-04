@@ -4,6 +4,12 @@ export interface RegisterDTO {
   password: string;
 }
 
+export interface FinishUserRegisterDTO {
+  username: string;
+  birthDate: Date;
+  height: number;
+}
+
 export interface User {
   id: string;
   username: string | null;
@@ -27,6 +33,11 @@ export async function loginUser(dto: RegisterDTO): Promise<{ access_token: strin
   const response = await api.post("/auth/login", dto);
   console.log("VOU SETAR ACCESS TOKEN:", response.data.access_token);
   localStorage.setItem("access_token", response.data.access_token);
+  return response.data;
+}
+
+export async function finishUserRegistration(dto: FinishUserRegisterDTO): Promise<User> {
+  const response = await api.patch("/users/finish-registration", dto);
   return response.data;
 }
 
