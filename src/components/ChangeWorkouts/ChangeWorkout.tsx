@@ -4,12 +4,12 @@ import { ChangeWorkoutForm } from "./ChangeWorkoutForm";
 
 export function ChangeWorkout() {
   return (
-    <div className="border-4 border-white rounded-sm p-2 my-5">
+    <div>
       <Dialog>
-        <DialogTrigger>
+        <DialogTrigger className="w-full rounded-md p-3 bg-gray-700 hover:bg-gray-800 transition-all cursor-pointer">
           <h1>Change my workouts</h1>
         </DialogTrigger>
-        <DialogContent className="scroll-auto">
+        <DialogContent className="scroll-auto lg:max-w-2/3">
           <ChangeWorkoutForm />
         </DialogContent>
       </Dialog>

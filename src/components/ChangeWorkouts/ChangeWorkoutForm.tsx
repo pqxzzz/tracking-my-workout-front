@@ -98,7 +98,7 @@ export const workoutSetForm = () => {
     });
 
     return (
-      <div className="border-t pt-5 pl-5">
+      <div className="border-t pt-5 pl-5 pr-2 bg-neutral-800 rounded-lg py-5">
         <FormField
           control={form.control}
           name={`workoutSet.workouts.${index}.name`}
@@ -113,132 +113,135 @@ export const workoutSetForm = () => {
           )}
         />
 
-        {exerciseFields.map((exerciseField, exerciseIndex) => (
-          <div className="pl-8 mt-5" key={exerciseField.id}>
-            <div className="flex flex-col gap-5">
-              <FormField
-                control={form.control}
-                name={`workoutSet.workouts.${index}.exercises.${exerciseIndex}.name`}
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>
-                      Workout #{index + 1} - Exercise {exerciseIndex} Name
-                    </FormLabel>
-                    <FormControl>
-                      <Input placeholder="Exercise Name" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <div className="grid grid-cols-2 gap-5">
+        <div className="my-5 rounded-lg bg-neutral-900 py-5">
+          {exerciseFields.map((exerciseField, exerciseIndex) => (
+            <div key={exerciseField.id} className="pl-5 pr-2 border-b py-5 border-b-neutral-500">
+              <div className="flex flex-col gap-5">
                 <FormField
                   control={form.control}
-                  name={`workoutSet.workouts.${index}.exercises.${exerciseIndex}.series`}
+                  name={`workoutSet.workouts.${index}.exercises.${exerciseIndex}.name`}
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>
-                        Workout #{index + 1} - Exercise {exerciseIndex} Series
+                        Workout #{index + 1} - Exercise {exerciseIndex} Name
                       </FormLabel>
                       <FormControl>
-                        <Input placeholder="Exercise Series" {...field} />
+                        <Input placeholder="Exercise Name" {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
                   )}
                 />
+                <div className="grid grid-cols-2 gap-5">
+                  <FormField
+                    control={form.control}
+                    name={`workoutSet.workouts.${index}.exercises.${exerciseIndex}.series`}
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>
+                          Workout #{index + 1} - Exercise {exerciseIndex} Series
+                        </FormLabel>
+                        <FormControl>
+                          <Input placeholder="Exercise Series" {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
+                    name={`workoutSet.workouts.${index}.exercises.${exerciseIndex}.repetitions`}
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>
+                          Workout #{index + 1} - Exercise {exerciseIndex} Repetitions
+                        </FormLabel>
+                        <FormControl>
+                          <Input placeholder="Exercise Reps" {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
+                    name={`workoutSet.workouts.${index}.exercises.${exerciseIndex}.weight`}
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>
+                          Workout #{index + 1} - Exercise {exerciseIndex} Weight
+                        </FormLabel>
+                        <FormControl>
+                          <Input placeholder="Exercise Weight" {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
+                    name={`workoutSet.workouts.${index}.exercises.${exerciseIndex}.muscleGroup`}
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>
+                          Workout #{index + 1} - Exercise {exerciseIndex} Muscle Group
+                        </FormLabel>
+                        <FormControl>
+                          <Input placeholder="Exercise Muscle Group" {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </div>
                 <FormField
                   control={form.control}
-                  name={`workoutSet.workouts.${index}.exercises.${exerciseIndex}.repetitions`}
+                  name={`workoutSet.workouts.${index}.exercises.${exerciseIndex}.information`}
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>
-                        Workout #{index + 1} - Exercise {exerciseIndex} Repetitions
+                        Workout #{index + 1} - Exercise {exerciseIndex} Information
                       </FormLabel>
                       <FormControl>
-                        <Input placeholder="Exercise Reps" {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name={`workoutSet.workouts.${index}.exercises.${exerciseIndex}.weight`}
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>
-                        Workout #{index + 1} - Exercise {exerciseIndex} Weight
-                      </FormLabel>
-                      <FormControl>
-                        <Input placeholder="Exercise Weight" {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name={`workoutSet.workouts.${index}.exercises.${exerciseIndex}.muscleGroup`}
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>
-                        Workout #{index + 1} - Exercise {exerciseIndex} Muscle Group
-                      </FormLabel>
-                      <FormControl>
-                        <Input placeholder="Exercise Muscle Group" {...field} />
+                        <Input placeholder="Exercise Information" {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
                   )}
                 />
               </div>
-              <FormField
-                control={form.control}
-                name={`workoutSet.workouts.${index}.exercises.${exerciseIndex}.information`}
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>
-                      Workout #{index + 1} - Exercise {exerciseIndex} Information
-                    </FormLabel>
-                    <FormControl>
-                      <Input placeholder="Exercise Information" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
+
+              <div className="flex gap-5 my-2">
+                {exerciseIndex === exerciseFields.length - 1 && (
+                  <Button
+                    type="button"
+                    onClick={() =>
+                      appendExercise({
+                        name: "",
+                        series: 0,
+                        repetitions: 0,
+                        weight: "0",
+                        information: "",
+                        muscleGroup: ""
+                      })
+                    }
+                  >
+                    Add exercise
+                  </Button>
                 )}
-              />
+                {exerciseIndex !== 0 && (
+                  <Button
+                    variant="destructive"
+                    type="button"
+                    onClick={() => removeExercise(exerciseIndex)}
+                  >
+                    Remove exercise
+                  </Button>
+                )}
+              </div>
             </div>
-
-            <div className="flex gap-5 my-2">
-              <Button
-                type="button"
-                onClick={() =>
-                  appendExercise({
-                    name: "",
-                    series: 0,
-                    repetitions: 0,
-                    weight: "0",
-                    information: "",
-                    muscleGroup: ""
-                  })
-                }
-              >
-                Add exercise
-              </Button>
-              {exerciseIndex !== 0 && (
-                <Button
-                  variant="destructive"
-                  type="button"
-                  onClick={() => removeExercise(exerciseIndex)}
-                >
-                  Remove exercise
-                </Button>
-              )}
-            </div>
-          </div>
-        ))}
-
+          ))}
+        </div>
         {index !== 0 && (
           <div>
             <Button variant={"destructive"} type="button" onClick={() => removeWorkout(index)}>
@@ -255,7 +258,7 @@ export const workoutSetForm = () => {
       <DialogTitle>Insert the informations for your new Workout Set!</DialogTitle>
 
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit, onError)} className="space-y-8 mt-5">
+        <form onSubmit={form.handleSubmit(onSubmit, onError)} className="space-y-4 mt-5">
           <FormField
             control={form.control}
             name="workoutSet.name"
