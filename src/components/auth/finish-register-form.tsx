@@ -39,9 +39,6 @@ export function FinishRegistration({ isOpen }: { isOpen: boolean }) {
   });
 
   function onSubmit(data: z.infer<typeof formSchema>) {
-    // console.error(mutation.error, mutation.isError);
-    console.log("data ->", data);
-
     try {
       mutation.mutateAsync(data);
     } catch (err) {

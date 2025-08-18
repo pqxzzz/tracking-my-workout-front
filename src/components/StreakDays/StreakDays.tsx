@@ -1,15 +1,42 @@
+import { Check } from "lucide-react";
+import { StreakCheck } from "./StreakCheck";
+
 export function StreakDays() {
+  const mockUserLast7DaysStreak = [
+    {
+      isCheck: true
+    },
+    {
+      isCheck: false
+    },
+    {
+      isCheck: false
+    },
+    {
+      isCheck: true
+    },
+    {
+      isCheck: true
+    },
+    {
+      isCheck: false
+    },
+    {
+      isCheck: true
+    }
+  ];
+
   return (
     <>
-      <h1>Week streak!</h1>
-      <div className="flex justify-center items-center gap-5 bg-gray-800 p-5">
-        <div className="w-5 h-5 rounded-sm border border-white bg-orange-600"></div>
-        <div className="w-5 h-5 rounded-sm border border-white bg-orange-600"></div>
-        <div className="w-5 h-5 rounded-sm border border-white"></div>
-        <div className="w-5 h-5 rounded-sm border border-white"></div>
-        <div className="w-5 h-5 rounded-sm border border-white bg-orange-600"></div>
-        <div className="w-5 h-5 rounded-sm border border-white"></div>
-        <div className="w-5 h-5 rounded-sm border border-white"></div>
+      <div className="flex flex-col items-center justify-center gap-2">
+        <h1 className="text-lg font-bold">Week streak!</h1>
+        <div className="card p-10 flex items-center justify-center">
+          <div className="flex gap-5">
+            {mockUserLast7DaysStreak.map((day, index) => (
+              <StreakCheck key={index} isCheck={day.isCheck} />
+            ))}
+          </div>
+        </div>
       </div>
     </>
   );

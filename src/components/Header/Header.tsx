@@ -1,35 +1,43 @@
 "use client";
 import { AuthContext } from "@/context/AuthContext";
-import { useContext } from "react";
+import { Profiler, useContext } from "react";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Button } from "../ui/button";
 import Link from "next/link";
+import { CircleUser, Dumbbell, DumbbellIcon, LucideDumbbell, User } from "lucide-react";
+import { usePathname } from "next/navigation";
 
 export function Header() {
   const context = useContext(AuthContext);
+  const pathname = usePathname();
 
   if (!context) {
     <div className="w-screen flex bg-red-400">DEU RUIM TODO</div>;
   }
 
+  if (pathname === "/auth") {
+    return null;
+  }
+
   if (context) {
     return (
-      <div className="w-screen flex justify-between px-5 md:px-10 bg-gray-800 py-5 mb-5">
-        <Link href={"./"}>
-          <h1>LOGO</h1>
+      <div className="w-screen flex justify-between px-5 md:px-10 bg-zinc-900 py-5 mb-5">
+        <Link href={"/"}>
+          <Dumbbell fill="white" className="rotate-45" />
         </Link>
-        <h1>Menu</h1>
+        <h1 className="text-xl font-black">Tracking My Workout</h1>
         <Popover>
-          <PopoverTrigger>
-            <h1>{context.user?.username}</h1>
+          <PopoverTrigger className="cursor-pointer">
+            {/* <h1>{context.user?.username}</h1>
+             */}
+            <CircleUser />
           </PopoverTrigger>
-          <PopoverContent>
+          <PopoverContent className="flex flex-col gap-5 items-center">
             <ul>
-              <li>{context.user?.email}</li>
-              <li>{context.user?.height ? context.user?.height / 100 : "X"} m</li>
+              <li>{context.user?.username}</li>
             </ul>
             <Button className="" type="button">
-              <Link href={"./profile"}>
+              <Link href={"/profile"}>
                 <p>Profile</p>
               </Link>
             </Button>

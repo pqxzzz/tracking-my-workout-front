@@ -41,22 +41,6 @@ export async function finishUserRegistration(dto: FinishUserRegisterDTO): Promis
   return response.data;
 }
 
-// export async function getUserData(dto: { access_token: string }): Promise<User> {
-//   try {
-//     const response = await api.get("/users/me", {
-//       headers: {
-//         Authorization: `Bearer ${dto.access_token}`
-//       }
-//     });
-//     if (!response.data) {
-//       throw new Error("User data empty");
-//     }
-//     return response.data;
-//   } catch (error) {
-//     throw new Error("Can not find user!");
-//   }
-// }
-
 export async function getUserData(): Promise<User> {
   try {
     const response = await api.get("/users/me");

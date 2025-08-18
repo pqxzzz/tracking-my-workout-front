@@ -5,7 +5,7 @@ export function MostRecentWorkoutDay() {
   };
 
   return (
-    <div className="my-5 w-full border rounded-sm border-white p-2">
+    <div className="card text-center md:h-[200px] transition-all flex flex-col items-center justify-center gap-5 text-xl">
       <h1 className="break-all">
         Your last workout:
         <span> {MockRecentWorkoutDay.workout}</span>

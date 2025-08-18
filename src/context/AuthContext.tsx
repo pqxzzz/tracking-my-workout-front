@@ -68,11 +68,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     // TODO: QUANDO DA ERROR NAO TA TRIGGANDO
   }, [userData, token, error]);
 
-  // useEffect(() => {
-  //   //TODO: nao entendi mt bem
-  //   if (userData && token) setUser(userData);
-  // }, [userData, token, error]);
-
   return (
     <AuthContext.Provider value={{ token, setToken, user, setUser, isLoading, authReady }}>
       <h1 className="bg-red-800 text-white font-bold text-2xl">

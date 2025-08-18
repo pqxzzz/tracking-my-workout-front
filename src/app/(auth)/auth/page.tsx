@@ -8,21 +8,25 @@ export default function Auth() {
   const [newUser, setNewUser] = useState(false);
 
   return (
-    <div className="basic-layout-mobile flex-col bg-gray-800 p-5 rounded-md">
-      <div>
-        <h1 className="text-2xl font-bold">Welcome</h1>
+    <div className="flex h-full">
+      <div className="hidden md:flex w-1/2 bg-neutral-800 h-screen items-center justify-center">
+        <h1 className="font-black text-6xl lg:text-8xl text-balance px-10 gradient-text">
+          Welcome to, <span className="">Tracking My Workout</span>
+        </h1>
       </div>
-      <div className="flex flex-col gap-5">
-        <Button
-          variant="link"
-          className="underline"
-          onClick={() => {
-            setNewUser(!newUser);
-          }}
-        >
-          {newUser ? "Login" : "Register"}
-        </Button>
-        {newUser ? <RegisterForm /> : <LoginForm />}
+      <div className="w-full md:w-1/2 flex flex-col justify-center bg-neutral-950 p-5 rounded-md">
+        <div className="flex flex-col gap-5 justify-center">
+          <Button
+            variant="link"
+            className="underline w-fit"
+            onClick={() => {
+              setNewUser(!newUser);
+            }}
+          >
+            {newUser ? "Login" : "Register"}
+          </Button>
+          {newUser ? <RegisterForm /> : <LoginForm />}
+        </div>
       </div>
     </div>
   );

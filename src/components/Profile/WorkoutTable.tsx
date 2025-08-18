@@ -35,7 +35,7 @@ export function WorkoutTable({ Workout }: { Workout: WorkoutType }) {
   };
 
   return (
-    <div className="h-full bg-neutral-800 rounded-lg pt-2 border-2 border-neutral-700">
+    <div className="h-full card">
       <h1 className="lg:text-lg font-bold px-5">{Workout.name}</h1>
       <Table className="text-sm lg:text-base p-0">
         <TableCaption className="p-0 m-0">
