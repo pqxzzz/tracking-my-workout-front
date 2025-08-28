@@ -6,6 +6,7 @@ import { Button } from "../ui/button";
 import Link from "next/link";
 import { CircleUser, Dumbbell, DumbbellIcon, LucideDumbbell, User } from "lucide-react";
 import { usePathname } from "next/navigation";
+import { useLogout } from "@/hooks/useAuth";
 
 export function Header() {
   const context = useContext(AuthContext);
@@ -18,6 +19,8 @@ export function Header() {
   if (pathname === "/auth") {
     return null;
   }
+
+  const logout = useLogout();
 
   if (context) {
     return (
@@ -40,6 +43,9 @@ export function Header() {
               <Link href={"/profile"}>
                 <p>Profile</p>
               </Link>
+            </Button>
+            <Button className="" type="button" onClick={logout}>
+              <p>Logout</p>
             </Button>
           </PopoverContent>
         </Popover>

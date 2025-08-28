@@ -58,6 +58,31 @@ export function useLogin() {
   });
 }
 
+export function useLogout() {
+  const queryClient = useQueryClient();
+  const context = useContext(AuthContext);
+
+  if (!context) {
+    throw new Error("Context nao encontrado");
+  }
+
+  return () => {
+    // 1. Remover token
+    context.setToken(null);
+    localStorage.removeItem("access_token");
+
+    // 2. Remover usuário do contexto
+    context.setUser(null);
+
+    // 3. Limpar cache de queries relacionadas
+    queryClient.removeQueries({ queryKey: ["currentUser"] });
+    queryClient.removeQueries({ queryKey: ["access_token"] });
+
+    // 4. Redirecionar para login
+    window.location.href = "/auth"; // ou useRouter().push("/auth")
+  };
+}
+
 export function useFinishRegister() {
   const queryClient = useQueryClient();
 
@@ -81,10 +106,8 @@ export function useFinishRegister() {
 export function useGetUser({ enabled }: { enabled: boolean }) {
   return useQuery({
     queryKey: ["currentUser"],
-    queryFn: () => {
-      console.log("Foi buscado as informacoes do usuario!");
-      return getUserData();
-    },
+    queryFn: () => getUserData(),
     enabled
+    // retry: false
   });
 }

@@ -15,8 +15,6 @@ export default function ProfilePage() {
 
   const workoutSetInfo = getUserWorkoutSets();
 
-  console.log("WORKOUTSET INFO:", workoutSetInfo.data);
-
   return (
     <div className="px-5 lg:px-10 flex flex-col gap-5 pb-50">
       <div className="w-full flex gap-5">

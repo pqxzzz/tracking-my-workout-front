@@ -35,7 +35,7 @@ export function LoginForm() {
 
   if (isPending) {
     <Skeleton>
-      <h1 className="alert">LOading</h1>
+      <h1 className="alert">Loading</h1>
     </Skeleton>;
   }
 

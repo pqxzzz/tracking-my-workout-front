@@ -1,8 +1,7 @@
+import { useGetUserWorkoutLogs } from "@/hooks/Workout_Logs/useGetUserWorkoutLogs.hook";
 import { Button } from "../ui/button";
 
 export function NewDayForm() {
-  // workout tracking: data, workoutId, rating?
-
   const mockLastWorkout = {
     id: "1",
     date: "2025-08-15",

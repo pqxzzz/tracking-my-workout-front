@@ -37,7 +37,10 @@ const maxWeight = Math.max(...mockUserWeights.map((d) => d.weight));
 
 export const WeightProgressChart = () => {
   return (
-    <ChartContainer config={chartConfig} className="min-h-[200px] w-full card">
+    <ChartContainer
+      config={chartConfig}
+      className="min-h-[200px] max-h-[600px] max-w-[600px] bg-red-400 w-full card"
+    >
       <LineChart
         accessibilityLayer
         data={mockUserWeights}
