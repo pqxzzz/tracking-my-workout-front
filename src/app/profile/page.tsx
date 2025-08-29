@@ -11,8 +11,6 @@ import { useContext } from "react";
 export default function ProfilePage() {
   const context = useContext(AuthContext);
 
-  console.log(context);
-
   const workoutSetInfo = getUserWorkoutSets();
 
   return (

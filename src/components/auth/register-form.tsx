@@ -41,13 +41,7 @@ export function RegisterForm() {
   const { mutate, isPending, isError, error, isSuccess, data } = useRegister();
 
   const onSubmit = (values: z.infer<typeof formSchema>) => {
-    mutate(
-      { email: values.email, password: values.password },
-      {
-        onSuccess: () => console.log("registrado com sucesso."),
-        onError: () => console.log("falha ao registrar")
-      }
-    );
+    mutate({ email: values.email, password: values.password });
   };
 
   return (
