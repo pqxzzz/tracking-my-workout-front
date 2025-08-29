@@ -3,14 +3,7 @@ import { Skeleton } from "../ui/skeleton";
 import * as dateFns from "date-fns";
 
 export function MostRecentWorkoutDay() {
-  const MockRecentWorkoutDay = {
-    day: "31/07/2025",
-    workout: "Back and Biceps - x"
-  };
-
   const workoutLog = useGetUserWorkoutLogs(1, 1);
-
-  console.log("--->", workoutLog.data);
 
   if (workoutLog.isPending || !workoutLog.data) {
     return (
@@ -28,7 +21,13 @@ export function MostRecentWorkoutDay() {
         <span> {workoutLog.data?.data[0].workout.name}</span>
       </h1>
       <h1>
-        date: <span>{dateFns.format(workoutLog.data.data[0].date, "dd/MM/yyyy")}</span>
+        date:{" "}
+        <span>
+          {dateFns.format(workoutLog.data.data[0].date, "dd/MM/yyyy") ===
+          dateFns.format(new Date(), "dd/MM/yyyy")
+            ? "Today!"
+            : dateFns.format(workoutLog.data.data[0].date, "dd/MM/yyyy")}
+        </span>
       </h1>
     </div>
   );

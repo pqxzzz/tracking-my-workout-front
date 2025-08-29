@@ -8,6 +8,7 @@ import { TodayWorkoutInfo } from "@/components/Workout/TodayWorkoutInfo";
 
 import { AuthContext } from "@/context/AuthContext";
 import { useGetUser } from "@/hooks/useAuth";
+import { useGetUserWorkoutLogs } from "@/hooks/Workout_Logs/useGetUserWorkoutLogs.hook";
 import { useContext } from "react";
 
 export default function Home() {
@@ -21,7 +22,7 @@ export default function Home() {
   return (
     <div className="px-10 pb-50">
       <TodayWorkoutInfo />
-      <div className="grid grid-cols-1 md:grid-cols-3 items-center justify-center">
+      <div className="mt-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 items-center justify-center">
         <NewDay />
         {/* <div className="flex gap-5"> */}
         <MostRecentWorkoutDay />

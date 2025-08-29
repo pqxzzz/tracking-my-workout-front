@@ -2,7 +2,7 @@ import { api } from "./axios";
 import { WorkoutType } from "./workoutSet";
 
 export interface WorkoutLogType {
-  userId: string;
+  // userId: string;
   workoutId: string;
   date: Date; // ou Date se você converter
   workout: WorkoutType;
@@ -27,5 +27,15 @@ export async function getWorkoutLogs(
     return data;
   } catch (err) {
     throw new Error(`Couldn't find workout logs: ${err}`);
+  }
+}
+
+export async function postWorkoutLog(workoutId: string) {
+  try {
+    const response = await api.post(`/workout-log`, { workoutId: workoutId });
+
+    return response.data;
+  } catch (error) {
+    throw new Error(`Couldn't register new Log: ${error}`);
   }
 }
