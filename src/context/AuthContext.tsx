@@ -32,7 +32,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     const stored = localStorage.getItem("access_token");
     if (stored) setTokenState(stored);
 
-    setTimeout(() => setAuthReady(true), 0);
+    setAuthReady(true);
+    // setTimeout(() => setAuthReady(true), 0);
   }, []);
 
   const setToken = (newToken: string | null) => {
@@ -51,22 +52,22 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     error,
     failureCount
   } = useGetUser({
-    enabled: !!token
+    enabled: authReady && !!token
   });
 
   useEffect(() => {
-    console.log("user data atualizado useEffect context!");
-    if (userData && token) setUser(userData);
-    if (error) {
-      console.error(error);
-      router.push("/auth");
-      localStorage.removeItem("access_token");
-      queryClient.removeQueries({ queryKey: ["access_token"] }); // Limpa o cache do token
-      queryClient.removeQueries({ queryKey: ["currentUser"] }); // Limpa o cache do usuário
-      // TODO: adc toast
+    if (!authReady) return; // evita disparos antes do estado pronto
+
+    if (userData && token) {
+      setUser(userData);
     }
-    // TODO: QUANDO DA ERROR NAO TA TRIGGANDO
-  }, [userData, token, error]);
+
+    if (error && (error as any)?.response?.status === 401) {
+      setToken(null); // limpa token
+      router.push("/auth"); // redireciona
+    }
+  }, []);
+  // }, [userData, token, error, authReady]);
 
   return (
     <AuthContext.Provider value={{ token, setToken, user, setUser, isLoading, authReady }}>

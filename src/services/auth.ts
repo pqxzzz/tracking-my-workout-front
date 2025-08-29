@@ -50,6 +50,7 @@ export async function getUserData(): Promise<User> {
 
     return response.data;
   } catch (error) {
-    throw new Error("Couldn't find user info");
+    throw error;
+    // throw new Error("Couldn't find user info");
   }
 }

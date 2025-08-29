@@ -9,12 +9,9 @@ export function AuthGate({ children }: { children: React.ReactNode }) {
   const router = useRouter();
 
   useEffect(() => {
-    if (context?.authReady && !context?.token) {
-      console.log("NAO TEM CONTEXTO ENTAO VAI PRA AUTH");
-      console.log(context);
-      router.push("/auth");
-    }
-  }, [context]);
+    if (!context?.authReady) return; // espera o provider estar pronto
+    if (!context?.token) router.push("/auth");
+  }, [context?.authReady, context?.token]);
 
   if (!context?.authReady || context?.isLoading) {
     return (

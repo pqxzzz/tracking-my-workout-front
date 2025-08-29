@@ -11,16 +11,11 @@ import { useLogout } from "@/hooks/useAuth";
 export function Header() {
   const context = useContext(AuthContext);
   const pathname = usePathname();
+  const logout = useLogout();
 
-  if (!context) {
-    <div className="w-screen flex bg-red-400">DEU RUIM TODO</div>;
-  }
-
-  if (pathname === "/auth") {
+  if (pathname === "/auth" || !context) {
     return null;
   }
-
-  const logout = useLogout();
 
   if (context) {
     return (
