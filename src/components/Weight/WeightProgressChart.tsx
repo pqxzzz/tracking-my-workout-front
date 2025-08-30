@@ -1,29 +1,7 @@
 import { CartesianGrid, Line, LineChart, XAxis, YAxis } from "recharts";
-import { ChartConfig } from "../ui/chart";
+import { ChartConfig, ChartTooltip, ChartTooltipContent } from "../ui/chart";
 import { ChartContainer } from "../ui/chart";
-
-const mockUserWeights = [
-  {
-    date: "2025-05-20",
-    weight: 65
-  },
-  {
-    date: "2025-06-20",
-    weight: 69
-  },
-  {
-    date: "2025-07-20",
-    weight: 63
-  },
-  {
-    date: "2025-08-20",
-    weight: 65
-  },
-  {
-    date: "2025-09-20",
-    weight: 74
-  }
-];
+import { WeightType } from "@/services/weight.service";
 
 const chartConfig = {
   weight: {
@@ -32,18 +10,22 @@ const chartConfig = {
   }
 } satisfies ChartConfig;
 
-const minWeight = Math.min(...mockUserWeights.map((d) => d.weight));
-const maxWeight = Math.max(...mockUserWeights.map((d) => d.weight));
+export const WeightProgressChart = ({ weightInfo }: { weightInfo: WeightType[] }) => {
+  const sortedData = [...weightInfo].sort(
+    (a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
+  );
 
-export const WeightProgressChart = () => {
+  const minWeight = Math.min(...weightInfo.map((d) => d.weight));
+  const maxWeight = Math.max(...weightInfo.map((d) => d.weight));
+
   return (
     <ChartContainer
       config={chartConfig}
-      className="min-h-[200px] max-h-[600px] max-w-[600px] bg-red-400 w-full card"
+      className="min-h-[200px] max-h-[600px] max-w-[600px w-full card"
     >
       <LineChart
         accessibilityLayer
-        data={mockUserWeights}
+        data={sortedData}
         margin={{
           left: 12,
           right: 12
@@ -51,7 +33,7 @@ export const WeightProgressChart = () => {
       >
         <CartesianGrid vertical={false} />
         <XAxis
-          dataKey="date"
+          dataKey="createdAt"
           tickLine={false}
           axisLine={false}
           tickMargin={8}
@@ -64,6 +46,24 @@ export const WeightProgressChart = () => {
               year: "numeric"
             });
           }}
+        />
+        <ChartTooltip
+          cursor={false}
+          content={
+            <ChartTooltipContent
+              indicator="line"
+              labelFormatter={(_, payload) => {
+                if (!payload?.length) return "";
+                const isoDate = payload[0].payload.createdAt; // pega do backend
+                const date = new Date(isoDate);
+                return date.toLocaleDateString("pt-BR", {
+                  day: "2-digit",
+                  month: "2-digit",
+                  year: "numeric"
+                });
+              }}
+            />
+          }
         />
         <YAxis
           dataKey={"weight"}
