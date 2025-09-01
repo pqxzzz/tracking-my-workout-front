@@ -1,6 +1,5 @@
-// Server-Side Rendering page
+//  Server-Side Rendering page
 // app/workout/[id]/page.tsx
-import { notFound } from "next/navigation";
 import {
   Table,
   TableBody,
@@ -10,6 +9,7 @@ import {
   TableHeader,
   TableRow
 } from "@/components/ui/table";
+import { getWorkoutById } from "@/services/workouts.service";
 
 interface WorkoutPageProps {
   params: {
@@ -18,42 +18,14 @@ interface WorkoutPageProps {
 }
 
 export default async function WorkoutPage({ params }: WorkoutPageProps) {
-  const { id } = params;
+  const { id } = await params;
 
-  const getWorkoutById = (id: string) => {
-    const mockWorkout = {
-      id: "e0fdfb65-4906-4a52-a4b0-e787e43c8a3e",
-      name: "WORKOUT 1 NAME",
-      createdAt: "2025-08-06T10:49:33.132Z",
-      exercises: [
-        {
-          id: "dd782119-54e5-46b2-b1c8-1a9f2c9d99b5",
-          name: "EXERCISE FROM WORKOUT 1 NAME",
-          information: "",
-          series: 20,
-          repetitions: 3,
-          weight: "30",
-          muscleGroup: ""
-        },
-        {
-          id: "2c53d7ec-8a8f-4d4a-9e9e-653749bfc4ba",
-          name: "NEW EXERCISE!!!!!!!!!!!!!",
-          information: "info",
-          series: 5,
-          repetitions: 12,
-          weight: "423kg!!!⬜️",
-          muscleGroup: "Biceps"
-        }
-        // ...demais exercícios
-      ]
-    };
-    return mockWorkout;
-  };
-
+  // Chamada SSR
   const workout = await getWorkoutById(id);
 
   if (!workout) {
-    return notFound();
+    console.warn("workoutSet not found");
+    return <p>Nada</p>;
   }
 
   return (

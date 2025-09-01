@@ -42,6 +42,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       localStorage.setItem("access_token", newToken);
     } else {
       localStorage.removeItem("access_token");
+      console.error("setUser(null)");
       setUser(null);
     }
   };
