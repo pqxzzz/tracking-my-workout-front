@@ -14,6 +14,7 @@ import { useState } from "react";
 import { ChangeExerciseForm } from "../Forms/ChangeExerciseForm";
 import { DialogTitle } from "@radix-ui/react-dialog";
 import { Button } from "../ui/button";
+import { Plus, Edit3, Dumbbell, Target, Zap } from "lucide-react";
 
 export function WorkoutTable({ Workout }: { Workout: WorkoutType }) {
   // --- Edit Exercise Modal states
@@ -30,47 +31,82 @@ export function WorkoutTable({ Workout }: { Workout: WorkoutType }) {
   const closeModal = () => {
     setIsEditModalOpen(false);
     setSelectedExercise(null);
-
     setIsAddModalOpen(false);
   };
 
   return (
-    <div className="h-full card">
-      <h1 className="lg:text-lg font-bold px-5">{Workout.name}</h1>
-      <Table className="text-sm lg:text-base p-0">
-        <TableCaption className="p-0 m-0">
-          <Button
-            type="button"
-            variant={"ghost"}
-            onClick={() => setIsAddModalOpen(true)}
-            className="font-bold text-lg hover:brightness-200 hover:cursor-pointer p-0 py-0"
-          >
-            <p>+</p>
-          </Button>
-        </TableCaption>
-        <TableHeader>
-          <TableRow>
-            <TableHead className="w-[100px]">Exercise</TableHead>
-            <TableHead className="w-[100px]">Series</TableHead>
-            <TableHead className="w-[100px]">Weight</TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {Workout.exercises.map((exercise) => (
-            // TODO: Adc modal ao clicar e poder editar ou ver mais
-            <TableRow
-              key={exercise.id}
-              onClick={() => openEditExerciseModal(exercise.id)}
-              className="hover:brightness-80 transition hover:cursor-pointer"
-            >
-              <TableCell className="font-medium">{exercise.name}</TableCell>
-              <TableCell className="font-medium">{exercise.series}</TableCell>
-              <TableCell className="font-medium">{exercise.weight}</TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
+    <div className="bg-gradient-to-br from-card to-card/50 border border-border rounded-xl p-6 shadow-lg hover:shadow-xl transition-all duration-300">
+      {/* Workout Header */}
+      <div className="flex items-center gap-3 mb-4 pb-4 border-b border-border/50">
+        <div className="p-2 bg-orange-500/20 rounded-lg">
+          <Dumbbell className="h-5 w-5 text-orange-500" />
+        </div>
+        <div className="flex-1">
+          <h3 className="text-lg font-bold text-foreground">{Workout.name}</h3>
+          <p className="text-sm text-muted-foreground">
+            {Workout.exercises.length} exercise
+            {Workout.exercises.length !== 1 ? "s" : ""}
+          </p>
+        </div>
+      </div>
 
+      {/* Exercises Table */}
+      <div className="space-y-3">
+        {Workout.exercises.map((exercise) => (
+          <div
+            key={exercise.id}
+            onClick={() => openEditExerciseModal(exercise.id)}
+            className="group flex items-center justify-between p-3 bg-muted/30 rounded-lg hover:bg-muted/50 cursor-pointer transition-all duration-200 hover:shadow-md"
+          >
+            <div className="flex items-center gap-3">
+              <div className="p-1.5 bg-blue-500/20 rounded-md">
+                <Target className="h-4 w-4 text-blue-500" />
+              </div>
+              <div>
+                <p className="font-medium text-foreground group-hover:text-blue-500 transition-colors">
+                  {exercise.name}
+                </p>
+                <p className="text-xs text-muted-foreground">
+                  {exercise.muscleGroup}
+                </p>
+              </div>
+            </div>
+
+            <div className="flex items-center gap-4 text-sm">
+              <div className="text-center">
+                <p className="text-muted-foreground">Series</p>
+                <p className="font-semibold text-foreground">
+                  {exercise.series}
+                </p>
+              </div>
+              <div className="text-center">
+                <p className="text-muted-foreground">Weight</p>
+                <p className="font-semibold text-foreground">
+                  {exercise.weight}kg
+                </p>
+              </div>
+              <Edit3 className="h-4 w-4 text-muted-foreground group-hover:text-blue-500 transition-colors" />
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {/* Add Exercise Button */}
+      <div className="mt-4 pt-4 border-t border-border/50">
+        <Button
+          type="button"
+          variant="ghost"
+          onClick={() => setIsAddModalOpen(true)}
+          className="w-full h-12 border-2 border-dashed border-border hover:border-primary hover:bg-primary/5 transition-all duration-200 group"
+        >
+          <Plus className="h-5 w-5 mr-2 text-muted-foreground group-hover:text-primary transition-colors" />
+          <span className="text-muted-foreground group-hover:text-primary transition-colors">
+            Add Exercise
+          </span>
+        </Button>
+      </div>
+
+      {/* Edit Exercise Modal */}
       <Dialog
         open={isEditModalOpen}
         onOpenChange={(open) => {
@@ -79,13 +115,21 @@ export function WorkoutTable({ Workout }: { Workout: WorkoutType }) {
           }
         }}
       >
-        <DialogContent>
-          <DialogTitle>Edit exercise</DialogTitle>
+        <DialogContent className="max-w-2xl">
+          <DialogTitle className="flex items-center gap-2 text-xl font-bold">
+            <Edit3 className="h-5 w-5 text-blue-500" />
+            Edit Exercise
+          </DialogTitle>
           {selectedExercise && (
-            <ChangeExerciseForm exerciseId={selectedExercise} onSuccess={closeModal} />
+            <ChangeExerciseForm
+              exerciseId={selectedExercise}
+              onSuccess={closeModal}
+            />
           )}
         </DialogContent>
       </Dialog>
+
+      {/* Add Exercise Modal */}
       <Dialog
         open={isAddModalOpen}
         onOpenChange={(open) => {
@@ -94,9 +138,14 @@ export function WorkoutTable({ Workout }: { Workout: WorkoutType }) {
           }
         }}
       >
-        <DialogContent>
-          <DialogTitle>Add exercise</DialogTitle>
-          {isAddModalOpen && <ChangeExerciseForm onSuccess={closeModal} workoutId={Workout.id} />}
+        <DialogContent className="max-w-2xl">
+          <DialogTitle className="flex items-center gap-2 text-xl font-bold">
+            <Plus className="h-5 w-5 text-green-500" />
+            Add New Exercise
+          </DialogTitle>
+          {isAddModalOpen && (
+            <ChangeExerciseForm onSuccess={closeModal} workoutId={Workout.id} />
+          )}
         </DialogContent>
       </Dialog>
     </div>
