@@ -1,4 +1,3 @@
-import { ExerciseType } from "@/services/workoutSet";
 import { getExerciseById } from "@/services/exercise";
 import { useQuery } from "@tanstack/react-query";
 

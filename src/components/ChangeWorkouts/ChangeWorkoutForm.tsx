@@ -1,5 +1,5 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm, useFieldArray } from "react-hook-form";
+import { useForm, useFieldArray, FieldErrors } from "react-hook-form";
 import { z } from "zod";
 import { Button } from "@/components/ui/button";
 import {
@@ -12,8 +12,6 @@ import {
   FormMessage
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { useEffect } from "react";
-import { DialogTitle } from "../ui/dialog";
 import { Plus, Trash2, Dumbbell, Target, Settings, Save } from "lucide-react";
 
 const formSchema = z.object({
@@ -46,10 +44,10 @@ const formSchema = z.object({
 });
 
 export function ChangeWorkoutForm() {
-  return workoutSetForm();
+  return WorkoutSetForm();
 }
 
-export const workoutSetForm = () => {
+export const WorkoutSetForm = () => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -87,7 +85,7 @@ export const workoutSetForm = () => {
     console.log(values);
   };
 
-  const onError = (fieldsErrors: any) => {
+  const onError = (fieldsErrors: FieldErrors<z.infer<typeof formSchema>>) => {
     console.log(fieldsErrors);
   };
 

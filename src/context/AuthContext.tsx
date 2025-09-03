@@ -1,9 +1,9 @@
 "use client";
 import { useGetUser } from "@/hooks/useAuth";
 import { User } from "@/services/auth";
-import { useQueryClient } from "@tanstack/react-query";
+import { AxiosError } from "axios";
 import { useRouter } from "next/navigation";
-import { createContext, use, useEffect, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 
 type AuthContextType = {
   token: string | null;
@@ -25,8 +25,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
 
   const router = useRouter();
-
-  const queryClient = useQueryClient();
 
   useEffect(() => {
     const stored = localStorage.getItem("access_token");
@@ -53,25 +51,28 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     error,
     failureCount
   } = useGetUser({
-    enabled: authReady && !!token
+    enabled: true
   });
 
   useEffect(() => {
+    console.log("executou useEffect!");
     if (!authReady) return; // evita disparos antes do estado pronto
 
     if (userData && token) {
       setUser(userData);
     }
 
-    if (error && (error as any)?.response?.status === 401) {
+    if (error && (error as AxiosError)?.response?.status === 401) {
       setToken(null); // limpa token
       router.push("/auth"); // redireciona
     }
-  }, []);
+  }, [error, authReady, userData, token, router]);
   // }, [userData, token, error, authReady]);
 
   return (
-    <AuthContext.Provider value={{ token, setToken, user, setUser, isLoading, authReady }}>
+    <AuthContext.Provider
+      value={{ token, setToken, user, setUser, isLoading, authReady }}
+    >
       <h1 className="bg-red-800 text-white font-bold text-2xl">
         {failureCount} -{error ? "teve erro" : "sem erro"}
       </h1>

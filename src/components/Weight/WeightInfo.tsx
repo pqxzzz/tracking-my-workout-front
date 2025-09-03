@@ -1,7 +1,7 @@
 import { useGetUserWeights } from "@/hooks/Weight/useGetUserWeights.hook";
 import { WeightProgressChart } from "./WeightProgressChart";
 import { Skeleton } from "../ui/skeleton";
-import { TrendingUp, Scale } from "lucide-react";
+import { Scale } from "lucide-react";
 
 export const WeightInfo = () => {
   const weightInfo = useGetUserWeights();

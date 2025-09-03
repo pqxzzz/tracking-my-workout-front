@@ -17,7 +17,7 @@ export function NewDay() {
   const today = dateFns.format(new Date(), "dd/MM/yyyy");
   const workoutLogs = useGetUserWorkoutLogs(1, 1);
 
-  let formattedDate = workoutLogs.data
+  const formattedDate = workoutLogs.data
     ? dateFns.format(workoutLogs.data.data[0].date, "dd/MM/yyyy")
     : null;
 
@@ -32,7 +32,7 @@ export function NewDay() {
             </h3>
           </div>
           <p className="text-foreground/80">
-            You've completed your workout today!{" "}
+            You&apos;ve completed your workout today!{" "}
             <span className="text-2xl">🎉</span>
           </p>
         </div>

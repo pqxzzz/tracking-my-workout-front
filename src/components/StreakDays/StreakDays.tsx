@@ -1,9 +1,8 @@
 "use client";
-import { Check } from "lucide-react";
 import { StreakCheck } from "./StreakCheck";
 import { useGetUserWorkoutLogs } from "@/hooks/Workout_Logs/useGetUserWorkoutLogs.hook";
 import { Skeleton } from "../ui/skeleton";
-import { isMatch, isSameDay, subDays } from "date-fns";
+import { isSameDay, subDays } from "date-fns";
 import { Flame, Target } from "lucide-react";
 
 export function StreakDays() {
@@ -29,7 +28,7 @@ export function StreakDays() {
   const today = new Date();
   const last7Days = [...Array(7)].map((_, i) => subDays(today, 6 - i));
 
-  let streakLast7Days = last7Days.map((day) => {
+  const streakLast7Days = last7Days.map((day) => {
     const didWorkout = workoutLog.data.data.some((log) =>
       isSameDay(new Date(log.date), day)
     );

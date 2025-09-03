@@ -11,7 +11,7 @@ export function AuthGate({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     if (!context?.authReady) return; // espera o provider estar pronto
     if (!context?.token) router.push("/auth");
-  }, [context?.authReady, context?.token]);
+  }, [context?.authReady, context?.token, router]);
 
   if (!context?.authReady || context?.isLoading) {
     return (

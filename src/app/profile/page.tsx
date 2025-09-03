@@ -2,15 +2,12 @@
 import { ChangeWorkout } from "@/components/ChangeWorkouts/ChangeWorkout";
 import { WorkoutSetTable } from "@/components/Profile/WorkoutSetTable";
 import { Skeleton } from "@/components/ui/skeleton";
-import { WeightProgressChart } from "@/components/Weight/WeightProgressChart";
-import { AuthContext } from "@/context/AuthContext";
 import { useGetUser } from "@/hooks/useAuth";
-import { getUserWorkoutSets } from "@/hooks/useGetWorkoutSets";
+import { useGetUserActiveWorkoutSet } from "@/hooks/useGetWorkoutSets";
 import { User, Weight, Calendar, Ruler, Trophy, Dumbbell } from "lucide-react";
-import { useContext } from "react";
 
 export default function ProfilePage() {
-  const workoutSetInfo = getUserWorkoutSets();
+  const workoutSetInfo = useGetUserActiveWorkoutSet();
   const userData = useGetUser({ enabled: true });
 
   if (!userData.data || userData.isPending || workoutSetInfo.isPending) {

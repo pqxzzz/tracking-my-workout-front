@@ -38,7 +38,7 @@ export function RegisterForm() {
     }
   });
 
-  const { mutate, isPending, isError, error, isSuccess, data } = useRegister();
+  const { mutate, isPending } = useRegister();
 
   const onSubmit = (values: z.infer<typeof formSchema>) => {
     mutate({ email: values.email, password: values.password });
@@ -48,7 +48,11 @@ export function RegisterForm() {
     <div className="py-5">
       <Form {...form}>
         {" "}
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4" autoComplete="off">
+        <form
+          onSubmit={form.handleSubmit(onSubmit)}
+          className="space-y-4"
+          autoComplete="off"
+        >
           <FormField
             control={form.control}
             name="email"
@@ -72,7 +76,11 @@ export function RegisterForm() {
                   <FormLabel>Password</FormLabel>
                   <FormMessage />
                   <FormControl>
-                    <Input {...field} placeholder={"password"} type={"password"} />
+                    <Input
+                      {...field}
+                      placeholder={"password"}
+                      type={"password"}
+                    />
                   </FormControl>
                   <FormDescription />
                 </FormItem>
@@ -86,7 +94,11 @@ export function RegisterForm() {
                   <FormLabel>Confirm Password</FormLabel>
                   <FormMessage />
                   <FormControl>
-                    <Input {...field} placeholder={"password"} type={"password"} />
+                    <Input
+                      {...field}
+                      placeholder={"password"}
+                      type={"password"}
+                    />
                   </FormControl>
                   <FormDescription />
                 </FormItem>

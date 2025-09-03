@@ -1,6 +1,6 @@
 "use client";
 import { AuthContext } from "@/context/AuthContext";
-import { Profiler, useContext } from "react";
+import { useContext } from "react";
 import {
   Popover,
   PopoverContent,
@@ -17,7 +17,7 @@ export function Header() {
   const pathname = usePathname();
   const logout = useLogout();
 
-  const user = useGetUser({ enabled: true });
+  const user = useGetUser();
 
   if (pathname === "/auth" || !context || !user.data) {
     return null;

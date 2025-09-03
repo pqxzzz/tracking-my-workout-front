@@ -1,20 +1,10 @@
-import {
-  Table,
-  TableBody,
-  TableCaption,
-  TableCell,
-  TableFooter,
-  TableHead,
-  TableHeader,
-  TableRow
-} from "@/components/ui/table";
-import { WorkoutSetType, WorkoutType } from "@/services/workoutSet";
+import { WorkoutType } from "@/services/workoutSet";
 import { Dialog, DialogContent } from "../ui/dialog";
 import { useState } from "react";
 import { ChangeExerciseForm } from "../Forms/ChangeExerciseForm";
 import { DialogTitle } from "@radix-ui/react-dialog";
 import { Button } from "../ui/button";
-import { Plus, Edit3, Dumbbell, Target, Zap } from "lucide-react";
+import { Plus, Edit3, Dumbbell, Target } from "lucide-react";
 
 export function WorkoutTable({ Workout }: { Workout: WorkoutType }) {
   // --- Edit Exercise Modal states

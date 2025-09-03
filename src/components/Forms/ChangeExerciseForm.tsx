@@ -1,23 +1,32 @@
 "use client";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
+import { FieldErrors, useForm } from "react-hook-form";
 import z from "zod";
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "../ui/form";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage
+} from "../ui/form";
 import { Input } from "../ui/input";
 import { useGetExerciseById } from "@/hooks/useGetExerciseById.hook";
-import { use, useEffect, useMemo } from "react";
+import { useEffect } from "react";
 import { Skeleton } from "../ui/skeleton";
 import { Button } from "../ui/button";
 import { useUpdateExercise } from "@/hooks/Exercises/useUpdateExercise.hook";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { createExercise } from "@/services/exercise";
-import { ExerciseType } from "@/services/workoutSet";
+import { useQueryClient } from "@tanstack/react-query";
 import { useCreateExercise } from "@/hooks/Exercises/useCreateExercise.hook";
 
 const formSchema = z.object({
   name: z.string().min(3, { message: "name must be at least 3 characters." }),
-  series: z.coerce.number().min(1, { message: "Series must be greater then 0." }),
-  repetitions: z.coerce.number().min(1, { message: "Repetitions must be greater then 0." }),
+  series: z.coerce
+    .number()
+    .min(1, { message: "Series must be greater then 0." }),
+  repetitions: z.coerce
+    .number()
+    .min(1, { message: "Repetitions must be greater then 0." }),
   weight: z.string(),
   information: z.string(),
   muscleGroup: z.string()
@@ -55,7 +64,7 @@ export function ChangeExerciseForm({
     if (exerciseQuery.data && exerciseId) {
       form.reset(exerciseQuery.data);
     }
-  }, [exerciseQuery.data]);
+  }, [exerciseQuery.data, exerciseId, form]);
 
   const mutation = useUpdateExercise();
 
@@ -98,7 +107,7 @@ export function ChangeExerciseForm({
     }
   };
 
-  const onError = (fieldsErrors: any) => {
+  const onError = (fieldsErrors: FieldErrors<z.infer<typeof formSchema>>) => {
     console.log(fieldsErrors);
   };
 
@@ -142,7 +151,10 @@ export function ChangeExerciseForm({
   return (
     <div>
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit, onError)} className="space-y-4 mt-5">
+        <form
+          onSubmit={form.handleSubmit(onSubmit, onError)}
+          className="space-y-4 mt-5"
+        >
           <div className="flex flex-col lg:flex-row gap-5">
             <FormField
               control={form.control}
@@ -151,7 +163,11 @@ export function ChangeExerciseForm({
                 <FormItem className="w-full">
                   <FormLabel>Exercise Name</FormLabel>
                   <FormControl>
-                    <Input placeholder="Exercise Name" maxLength={50} {...field} />
+                    <Input
+                      placeholder="Exercise Name"
+                      maxLength={50}
+                      {...field}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -178,7 +194,11 @@ export function ChangeExerciseForm({
                   <FormItem>
                     <FormLabel>Repetitions</FormLabel>
                     <FormControl>
-                      <Input placeholder="Repetitions" maxLength={12} {...field} />
+                      <Input
+                        placeholder="Repetitions"
+                        maxLength={12}
+                        {...field}
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -207,7 +227,11 @@ export function ChangeExerciseForm({
                 <FormItem className="w-full">
                   <FormLabel>Information</FormLabel>
                   <FormControl>
-                    <Input placeholder="Information" maxLength={128} {...field} />
+                    <Input
+                      placeholder="Information"
+                      maxLength={128}
+                      {...field}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -220,7 +244,11 @@ export function ChangeExerciseForm({
                 <FormItem className="w-full">
                   <FormLabel>Muscle Group</FormLabel>
                   <FormControl>
-                    <Input placeholder="Muscle Group" maxLength={12} {...field} />
+                    <Input
+                      placeholder="Muscle Group"
+                      maxLength={12}
+                      {...field}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>

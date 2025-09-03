@@ -10,10 +10,13 @@ export async function getExerciseById(id: string): Promise<ExerciseType> {
   }
 }
 
-export async function patchExercise(id: string, exerciseBody: Partial<ExerciseType>): Promise<any> {
-  const response = await api.patch(`/exercises/${id}`, exerciseBody);
+export async function patchExercise(
+  id: string,
+  exerciseBody: Partial<ExerciseType>
+): Promise<string> {
+  await api.patch(`/exercises/${id}`, exerciseBody);
 
-  return response.data;
+  return "Exercise updated successfully";
 }
 
 export async function createExercise(

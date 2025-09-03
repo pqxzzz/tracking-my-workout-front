@@ -11,16 +11,13 @@ import {
 } from "@/components/ui/table";
 import { getWorkoutById } from "@/services/workouts.service";
 
-interface WorkoutPageProps {
-  params: {
-    id: string;
-  };
-}
-
-export default async function WorkoutPage({ params }: WorkoutPageProps) {
+export default async function WorkoutPage({
+  params
+}: {
+  params: Promise<{ id: string }>;
+}) {
   const { id } = await params;
 
-  // Chamada SSR
   const workout = await getWorkoutById(id);
 
   if (!workout) {

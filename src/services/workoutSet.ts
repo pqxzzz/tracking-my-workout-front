@@ -33,7 +33,7 @@ export async function getUserActiveWorkoutSet(): Promise<WorkoutSetType> {
   try {
     const response = await api.get("/workoutsets/ActiveWorkoutSet");
     return response.data;
-  } catch (error) {
+  } catch {
     throw new Error("Couldn't find workoutset info");
   }
 }

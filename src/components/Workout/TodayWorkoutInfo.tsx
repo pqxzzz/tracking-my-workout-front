@@ -1,4 +1,4 @@
-import { getUserWorkoutSets } from "@/hooks/useGetWorkoutSets";
+import { useGetUserActiveWorkoutSet } from "@/hooks/useGetWorkoutSets";
 import { useGetUserWorkoutLogs } from "@/hooks/Workout_Logs/useGetUserWorkoutLogs.hook";
 import { WorkoutType } from "@/services/workoutSet";
 import Link from "next/link";
@@ -7,7 +7,7 @@ import { ArrowRight, Dumbbell } from "lucide-react";
 
 export const TodayWorkoutInfo = () => {
   const workoutLog = useGetUserWorkoutLogs(1, 1);
-  const workoutSet = getUserWorkoutSets();
+  const workoutSet = useGetUserActiveWorkoutSet();
 
   if (
     workoutLog.isPending ||

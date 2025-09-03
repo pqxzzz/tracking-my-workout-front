@@ -9,6 +9,7 @@ import {
   User
 } from "@/services/auth";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { AxiosError } from "axios";
 import { useRouter } from "next/navigation";
 import { useContext } from "react";
 
@@ -103,11 +104,25 @@ export function useFinishRegister() {
 }
 
 // TODO: tirar esse hook daqui
-export function useGetUser({ enabled }: { enabled: boolean }) {
+export function useGetUser({ enabled }: { enabled?: boolean } = {}) {
+  const ctx = useContext(AuthContext);
+
+  const hasToken =
+    !!ctx?.token ||
+    (typeof window !== "undefined" && !!localStorage.getItem("access_token"));
+
+  const isEnabled = (enabled ?? true) && hasToken;
+
   return useQuery({
     queryKey: ["currentUser"],
-    queryFn: () => getUserData(),
-    enabled
-    // retry: false
+    queryFn: getUserData,
+    enabled: isEnabled,
+    staleTime: 5 * 60 * 1000,
+    refetchOnWindowFocus: false,
+    refetchOnReconnect: false,
+    retry: (failureCount, error: AxiosError) => {
+      if (error?.response?.status === 401) return false;
+      return failureCount < 2;
+    }
   });
 }
