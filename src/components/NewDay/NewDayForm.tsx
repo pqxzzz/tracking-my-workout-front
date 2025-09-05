@@ -26,9 +26,7 @@ export function NewDayForm({
     }
   });
 
-  console.log(workoutSet.data);
-
-  if (!workoutSet.data || workoutSet.isPending) {
+  if (workoutSet.isPending) {
     return (
       <div className="space-y-4">
         <Skeleton className="h-6 w-3/4" /> {/* Para o título */}
@@ -42,6 +40,20 @@ export function NewDayForm({
           <Skeleton className="h-10 w-40 rounded-md" />{" "}
           {/* Para o botão principal */}
         </div>
+      </div>
+    );
+  }
+
+  if (!workoutSet.data) {
+    return (
+      <div className="text-center space-y-4">
+        <h2 className="text-lg font-semibold">No Workout Set Found</h2>
+        <p className="text-gray-600">
+          You need to create a workout set before starting your workouts.
+        </p>
+        <Button onClick={closeModal} className="w-fit">
+          Go to Profile
+        </Button>
       </div>
     );
   }

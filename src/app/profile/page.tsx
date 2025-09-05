@@ -109,6 +109,7 @@ export default function ProfilePage() {
         </div>
 
         {/* Workout Sets Section */}
+        {/* TODO: decidir oq fazer para quando nao tem workoutSetInfo */}
         {workoutSetInfo.data && (
           <div className="mb-12">
             <div className="flex items-center gap-3 mb-6">

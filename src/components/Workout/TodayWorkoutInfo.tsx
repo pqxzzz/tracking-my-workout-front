@@ -9,12 +9,37 @@ export const TodayWorkoutInfo = () => {
   const workoutLog = useGetUserWorkoutLogs(1, 1);
   const workoutSet = useGetUserActiveWorkoutSet();
 
-  if (
-    workoutLog.isPending ||
-    workoutSet.isPending ||
-    !workoutLog.data ||
-    !workoutSet.data
-  ) {
+  if (workoutLog.isPending || workoutSet.isPending) {
+    return (
+      <div className="w-full max-w-md mx-auto">
+        <Skeleton className="h-20 w-full rounded-xl" />
+      </div>
+    );
+  }
+
+  if (!workoutSet.data) {
+    return (
+      <div className="w-full max-w-md mx-auto">
+        <div className="bg-gradient-to-br from-orange-600/20 to-red-600/20 border border-orange-500/30 rounded-xl p-6">
+          <div className="flex items-center gap-3">
+            <div className="p-2 bg-orange-500/20 rounded-lg">
+              <Dumbbell className="h-5 w-5 text-orange-400" />
+            </div>
+            <div>
+              <p className="text-sm text-muted-foreground font-medium">
+                No Workout Set
+              </p>
+              <p className="text-lg font-semibold text-foreground">
+                Create a workout set to start
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (!workoutLog.data) {
     return (
       <div className="w-full max-w-md mx-auto">
         <Skeleton className="h-20 w-full rounded-xl" />

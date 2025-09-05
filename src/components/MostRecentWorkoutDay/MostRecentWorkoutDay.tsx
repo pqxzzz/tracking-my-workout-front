@@ -6,7 +6,11 @@ import { Clock, Calendar } from "lucide-react";
 export function MostRecentWorkoutDay() {
   const workoutLog = useGetUserWorkoutLogs(1, 1);
 
-  if (workoutLog.isPending || !workoutLog.data) {
+  if (
+    workoutLog.isPending ||
+    !workoutLog.data ||
+    !workoutLog.data.data.length
+  ) {
     return (
       <div className="w-full max-w-md mx-auto">
         <div className="bg-gradient-to-br from-orange-600/20 to-red-600/20 border border-orange-500/30 rounded-xl p-6 text-center">
