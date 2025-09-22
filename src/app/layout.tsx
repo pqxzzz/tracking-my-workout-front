@@ -4,6 +4,7 @@ import { Providers } from "./providers";
 import { AuthProvider } from "@/context/AuthContext";
 import { AuthGate } from "./AuthGate";
 import { Header } from "@/components/Header/Header";
+import OnBoardinggate from "./OnBoardingGate";
 
 export const metadata: Metadata = {
   title: "tracking my workout",
@@ -22,6 +23,7 @@ export default function RootLayout({
           <AuthProvider>
             <AuthGate>
               <Header />
+              <OnBoardinggate />
               {children}
             </AuthGate>
           </AuthProvider>

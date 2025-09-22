@@ -55,7 +55,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   });
 
   useEffect(() => {
-    console.log("executou useEffect!");
     if (!authReady) return; // evita disparos antes do estado pronto
 
     if (userData && token) {

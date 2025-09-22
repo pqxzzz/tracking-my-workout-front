@@ -67,9 +67,6 @@ export default function ProfilePage() {
                   <h1 className="text-3xl font-bold text-foreground mb-2">
                     {userData.data.username}
                   </h1>
-                  <p className="text-muted-foreground text-lg">
-                    Fitness Enthusiast
-                  </p>
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -89,7 +86,11 @@ export default function ProfilePage() {
                       <p className="text-sm text-muted-foreground">
                         Birth Date
                       </p>
-                      <p className="font-semibold">{userData.data.birthDate}</p>
+                      <p className="font-semibold">
+                        {new Date(
+                          userData.data.birthDate ?? ""
+                        ).toLocaleDateString("pt-BR")}
+                      </p>
                     </div>
                   </div>
 
@@ -99,7 +100,7 @@ export default function ProfilePage() {
                       <p className="text-sm text-muted-foreground">
                         Member Since
                       </p>
-                      <p className="font-semibold">2024</p>
+                      <p className="font-semibold">2025*</p>
                     </div>
                   </div>
                 </div>
