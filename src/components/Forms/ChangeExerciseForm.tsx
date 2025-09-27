@@ -91,8 +91,6 @@ export function ChangeExerciseForm({
       );
     } else {
       // post
-      // TODO: COMO VOU PASSAR O WORKOUTID??????? Last thing
-      console.log(values);
 
       createExerciseMutation.mutate(
         { exerciseBody: { ...values, workoutId } },
@@ -100,7 +98,8 @@ export function ChangeExerciseForm({
           onSuccess: () => {
             onSuccess?.();
             queryClient.invalidateQueries({ queryKey: ["activeWorkoutSet"] });
-            console.log("TODO: ADICIONAR TOAST");
+
+            // TODO: Adc Toast
           }
         }
       );

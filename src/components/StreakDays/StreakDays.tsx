@@ -42,20 +42,20 @@ export function StreakDays() {
 
   return (
     <div className="w-full max-w-md mx-auto">
-      <div className="text-center mb-4">
-        <div className="flex items-center justify-center gap-2 mb-2">
-          <Flame className="h-5 w-5 text-yellow-400" />
-          <h2 className="text-xl font-bold text-foreground">Week Streak</h2>
-        </div>
-        <div className="flex items-center justify-center gap-2">
-          <Target className="h-4 w-4 text-yellow-400" />
-          <span className="text-sm text-muted-foreground">
-            {currentStreak}/7 days completed
-          </span>
-        </div>
-      </div>
-
       <div className="bg-gradient-to-br from-yellow-600/20 to-orange-600/20 border border-yellow-500/30 rounded-xl p-6 shadow-lg">
+        <div className="text-center mb-4">
+          <div className="flex items-center justify-center gap-2 mb-2">
+            <Flame className="h-5 w-5 text-yellow-400" />
+            <h2 className="text-xl font-bold text-foreground">Week Streak</h2>
+          </div>
+          <div className="flex items-center justify-center gap-2">
+            <Target className="h-4 w-4 text-yellow-400" />
+            <span className="text-sm text-muted-foreground">
+              {currentStreak}/7 days completed
+            </span>
+          </div>
+        </div>
+
         <div className="flex justify-center gap-3">
           {streakLast7Days.map((day, index) => (
             <StreakCheck

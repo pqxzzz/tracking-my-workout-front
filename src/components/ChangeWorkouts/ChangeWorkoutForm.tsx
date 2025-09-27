@@ -29,13 +29,17 @@ const formSchema = z.object({
               .min(3, { message: "Name must be at least 3 characters." }),
             series: z.coerce
               .number()
-              .min(1, { message: "Series must be greater than 0." }),
+              .min(1, { message: "Series must be greater than 0." })
+              .max(16, { message: "Series can't be greater than 16." }),
             repetitions: z.coerce
               .number()
-              .min(1, { message: "Repetitions must be greater than 0." }),
-            weight: z.string(),
-            information: z.string(),
-            muscleGroup: z.string()
+              .min(1, { message: "Repetitions must be greater than 0." })
+              .max(32, { message: "Repetitions can't be greater than 32." }),
+            weight: z.string().max(32, { message: "Char limit 32." }),
+            information: z
+              .string()
+              .max(140, { message: "Max characters 140." }),
+            muscleGroup: z.string().max(32, { message: "Char limit 32." })
           })
         )
       })
@@ -82,6 +86,7 @@ export const WorkoutSetForm = () => {
   });
 
   const onSubmit = (values: z.infer<typeof formSchema>) => {
+    // create workoutset
     console.log(values);
   };
 
@@ -204,7 +209,7 @@ export const WorkoutSetForm = () => {
                           Weight (kg)
                         </FormLabel>
                         <FormControl>
-                          <Input type="number" placeholder="50" {...field} />
+                          <Input type="number" placeholder="50 kg" {...field} />
                         </FormControl>
                         <FormMessage />
                       </FormItem>

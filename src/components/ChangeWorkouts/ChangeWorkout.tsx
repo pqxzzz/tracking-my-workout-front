@@ -24,7 +24,7 @@ export function ChangeWorkout() {
             <Dumbbell className="h-6 w-6 text-purple-400 group-hover:scale-110 transition-transform" />
           </div>
         </DialogTrigger>
-        <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
+        <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto lg:max-w-4xl ">
           <DialogTitle className="text-2xl font-bold text-center mb-6">
             Create Your New Workout Set
           </DialogTitle>

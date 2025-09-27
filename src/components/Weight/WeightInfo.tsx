@@ -18,6 +18,25 @@ export const WeightInfo = () => {
     );
   }
 
+  // No weight data
+  if (weightInfo.data.length < 1) {
+    return (
+      <div className="w-full max-w-4xl mx-auto">
+        <div className="bg-gradient-to-br from-blue-600/10 to-indigo-600/10 border border-blue-500/20 rounded-xl p-6 text-center shadow-lg">
+          <div className="flex items-center justify-center gap-2 mb-4">
+            <Scale className="h-6 w-6 text-blue-400" />
+            <h2 className="text-xl font-semibold text-foreground">
+              No Weight Data
+            </h2>
+          </div>
+          <p className="text-sm text-muted-foreground">
+            Start logging your weight to track your progress here.
+          </p>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="w-full max-w-4xl mx-auto">
       <div className="text-center mb-6">
