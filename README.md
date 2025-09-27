@@ -1,6 +1,14 @@
 # 💪 Tracking My Workout
 
-A comprehensive workout tracking application built with Next.js, designed to help you monitor your fitness journey with detailed analytics and progress tracking.
+A comprehensive workout tracking application built with Next.js and Nest.js, designed to help you monitor your fitness journey with detailed analytics and progress tracking.
+Nest.Js Repo: https://github.com/pqxzzz/tracking-my-workout-nest
+
+## 📱 Screenshots
+
+<img width="1512" height="771" alt="image" src="https://github.com/user-attachments/assets/667a2ecc-d4b2-4239-9cfa-554cf4414af6" />
+<img width="1348" height="627" alt="image" src="https://github.com/user-attachments/assets/2be9ab1f-07f1-4f18-b203-4fed8a76daa7" />
+<img width="1034" height="667" alt="image" src="https://github.com/user-attachments/assets/6978a518-f7ef-4c7a-b63c-71307ab96d48" />
+<img width="1278" height="839" alt="image" src="https://github.com/user-attachments/assets/9063cc69-3e1c-4975-97d4-63f7b429ca97" />
 
 ## 🚀 Features
 
@@ -147,13 +155,6 @@ src/
 5. **Monitor your weight** and view analytics
 6. **Maintain your streak** and achieve your fitness goals
 
-## 📱 Screenshots
-
-<!-- Add your application screenshots here -->
-<!-- Screenshot 1: Dashboard Overview -->
-<!-- Screenshot 2: Workout Tracking Interface -->
-<!-- Screenshot 3: Weight Progress Charts -->
-<!-- Screenshot 4: Profile Management -->
 
 ## 🔧 Development
 
