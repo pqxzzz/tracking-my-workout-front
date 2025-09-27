@@ -29,11 +29,11 @@ export interface WorkoutSetType {
   workouts: WorkoutType[];
 }
 
-export async function getUserActiveWorkoutSet(): Promise<WorkoutSetType> {
+export async function getUserActiveWorkoutSet(): Promise<WorkoutSetType | null> {
   try {
     const response = await api.get("/workoutsets/ActiveWorkoutSet");
     return response.data;
-  } catch (error) {
+  } catch {
     throw new Error("Couldn't find workoutset info");
   }
 }

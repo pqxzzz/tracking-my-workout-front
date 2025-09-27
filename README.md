@@ -1,36 +1,225 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 💪 Tracking My Workout
 
-## Getting Started
+A comprehensive workout tracking application built with Next.js, designed to help you monitor your fitness journey with detailed analytics and progress tracking.
 
-First, run the development server:
+## 🚀 Features
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+### 🔐 Authentication System
+
+- **Secure Login/Register**: Complete authentication flow with form validation
+- **User Management**: Profile creation and management
+- **Protected Routes**: Secure access to workout data
+- **Session Management**: Persistent login with token-based authentication
+
+### 🏋️ Workout Management
+
+- **Create Workout Sets**: Design custom workout routines with multiple exercises
+- **Exercise Management**: Add, edit, and delete exercises with detailed specifications
+- **Workout Logging**: Track your daily workout sessions
+- **Progress Tracking**: Monitor your workout history and performance
+
+### 📊 Weight Tracking & Analytics
+
+- **Weight Logging**: Record your weight measurements over time
+- **Progress Charts**: Visual weight progression with interactive charts
+- **Analytics Dashboard**: Comprehensive view of your fitness metrics
+- **Trend Analysis**: Track weight changes and patterns
+
+### 🏆 Streak & Progress Tracking
+
+- **Workout Streaks**: Track consecutive workout days
+- **Achievement System**: Celebrate your fitness milestones
+- **Progress Visualization**: Beautiful charts and graphs for data analysis
+- **Goal Setting**: Set and track your fitness objectives
+
+### 👤 Profile Management
+
+- **Workout Customization**: Create and modify your workout routines
+- **Exercise Library**: Manage your personal exercise database
+- **Settings**: Customize your fitness tracking experience
+- **Data Export**: Access your workout and weight data
+
+## 🛠️ Tech Stack
+
+- **Framework**: Next.js 15.3.5 with App Router
+- **Language**: TypeScript
+- **Styling**: Tailwind CSS with custom components
+- **UI Components**: Radix UI primitives
+- **State Management**: React Context + TanStack Query
+- **Forms**: React Hook Form with Zod validation
+- **Charts**: Recharts for data visualization
+- **Icons**: Lucide React
+- **HTTP Client**: Axios
+
+## 📦 Installation
+
+1. **Clone the repository**
+
+   ```bash
+   git clone <repository-url>
+   cd tracking-my-workout-front
+   ```
+
+2. **Install dependencies**
+
+   ```bash
+   npm install
+   # or
+   yarn install
+   # or
+   pnpm install
+   ```
+
+3. **Set up environment variables**
+
+   ```bash
+   cp .env.example .env.local
+   # Configure your environment variables
+   ```
+
+4. **Run the development server**
+
+   ```bash
+   npm run dev
+   # or
+   yarn dev
+   # or
+   pnpm dev
+   ```
+
+5. **Open your browser**
+   Navigate to [http://localhost:3000](http://localhost:3000)
+
+## 🏗️ Project Structure
+
+```
+src/
+├── app/                    # Next.js App Router
+│   ├── (auth)/            # Authentication routes
+│   ├── profile/           # User profile pages
+│   ├── workout/           # Workout tracking pages
+│   └── layout.tsx         # Root layout
+├── components/            # Reusable UI components
+│   ├── auth/              # Authentication components
+│   ├── Weight/            # Weight tracking components
+│   ├── Workout/            # Workout management components
+│   ├── Profile/            # Profile management components
+│   └── ui/                 # Base UI components
+├── context/               # React Context providers
+├── hooks/                 # Custom React hooks
+├── services/              # API service layer
+└── lib/                   # Utility functions
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🎯 Key Components
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Authentication
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- **Login/Register Forms**: Secure user authentication
+- **Auth Context**: Global authentication state management
+- **Protected Routes**: Route protection with authentication gates
 
-## Learn More
+### Workout Tracking
 
-To learn more about Next.js, take a look at the following resources:
+- **TodayWorkoutInfo**: Current workout session information
+- **NewDay**: Start new workout sessions
+- **MostRecentWorkoutDay**: View recent workout history
+- **StreakDays**: Track workout consistency
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Weight Management
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- **WeightInfo**: Weight tracking dashboard
+- **WeightProgressChart**: Interactive weight progression charts
+- **Weight Analytics**: Comprehensive weight data analysis
 
-## Deploy on Vercel
+### Profile & Settings
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- **WorkoutTable**: Manage workout routines
+- **ChangeWorkoutForm**: Create and edit workout sets
+- **Exercise Management**: Add, edit, and delete exercises
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 🚀 Getting Started
+
+1. **Register an account** or **login** to access the application
+2. **Complete your profile** setup in the onboarding process
+3. **Create your first workout set** with custom exercises
+4. **Start logging workouts** and track your progress
+5. **Monitor your weight** and view analytics
+6. **Maintain your streak** and achieve your fitness goals
+
+## 📱 Screenshots
+
+<!-- Add your application screenshots here -->
+<!-- Screenshot 1: Dashboard Overview -->
+<!-- Screenshot 2: Workout Tracking Interface -->
+<!-- Screenshot 3: Weight Progress Charts -->
+<!-- Screenshot 4: Profile Management -->
+
+## 🔧 Development
+
+### Available Scripts
+
+- `npm run dev` - Start development server
+- `npm run build` - Build for production
+- `npm run start` - Start production server
+- `npm run lint` - Run ESLint
+
+### Code Quality
+
+- **TypeScript**: Full type safety
+- **ESLint**: Code linting and formatting
+- **Prettier**: Code formatting (if configured)
+- **Husky**: Git hooks for code quality
+
+## 🌟 Features in Detail
+
+### Workout Set Management
+
+- Create custom workout routines with multiple exercises
+- Set series, repetitions, and weight for each exercise
+- Organize exercises by muscle groups
+- Track workout history and progress
+
+### Weight Tracking
+
+- Log weight measurements with timestamps
+- Visual progress charts with trend analysis
+- Weight goal setting and tracking
+- Historical data analysis
+
+### Streak System
+
+- Track consecutive workout days
+- Visual streak indicators
+- Achievement celebrations
+- Progress motivation
+
+### Data Visualization
+
+- Interactive charts for weight progression
+- Workout frequency analytics
+- Performance trend analysis
+- Goal achievement tracking
+
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## 🙏 Acknowledgments
+
+- Built with [Next.js](https://nextjs.org/)
+- UI components from [Radix UI](https://www.radix-ui.com/)
+- Icons from [Lucide](https://lucide.dev/)
+- Charts powered by [Recharts](https://recharts.org/)
+
+---
+
+**Start your fitness journey today!** 💪

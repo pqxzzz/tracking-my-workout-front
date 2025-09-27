@@ -5,7 +5,6 @@ import { Form, FormControl, FormField, FormItem, FormLabel } from "../ui/form";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { useLogin } from "@/hooks/useAuth";
-import { useQueryClient } from "@tanstack/react-query";
 import { Skeleton } from "../ui/skeleton";
 
 const formSchema = z.object({
@@ -42,7 +41,11 @@ export function LoginForm() {
   return (
     <div>
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4" autoComplete="off">
+        <form
+          onSubmit={form.handleSubmit(onSubmit)}
+          className="space-y-4"
+          autoComplete="off"
+        >
           <FormField
             control={form.control}
             name="email"

@@ -1,12 +1,5 @@
 import { useFinishRegister } from "@/hooks/useAuth";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger
-} from "../ui/dialog";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "../ui/dialog";
 import z from "zod";
 import { Form, FormControl, FormField, FormItem, FormLabel } from "../ui/form";
 import { useForm } from "react-hook-form";
@@ -15,18 +8,31 @@ import { Input } from "../ui/input";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 import { cn } from "@/lib/utils";
 
-import { format } from "path";
 import { Button } from "../ui/button";
 import { CalendarIcon } from "lucide-react";
 import { Calendar } from "../ui/calendar"; // or the correct path to your Calendar component
 
 const formSchema = z.object({
-  username: z.string().min(4, { message: "Username must be at least 4 letters long." }),
-  birthDate: z.date().min(new Date("1900-01-01")), /// nao pode ser 10anos antes de hoje
+  username: z
+    .string()
+    .min(4, { message: "Username must be at least 4 letters long." })
+    .max(32, { message: "Username must be at most 32 letters long." }),
+  birthDate: z
+    .date()
+    .min(new Date("1930-01-01"), { message: "Date must be after 1930." })
+    .max(new Date(new Date().setFullYear(new Date().getFullYear() - 10)), {
+      message: "You must be at least 10 years old."
+    }), /// nao pode ser 10anos antes de hoje
   height: z.coerce.number().min(100, { message: "Insert a valid height." })
 });
 
-export function FinishRegistration({ isOpen }: { isOpen: boolean }) {
+export function FinishRegistration({
+  isOpen,
+  setIsOpen
+}: {
+  isOpen: boolean;
+  setIsOpen: (open: boolean) => void;
+}) {
   const mutation = useFinishRegister();
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -41,13 +47,15 @@ export function FinishRegistration({ isOpen }: { isOpen: boolean }) {
   function onSubmit(data: z.infer<typeof formSchema>) {
     try {
       mutation.mutateAsync(data);
+      form.reset();
+      setIsOpen(false);
     } catch (err) {
       console.error(err);
     }
   }
 
   return (
-    <div className="bg-violet-700 p-5">
+    <div>
       <Dialog open={isOpen}>
         <DialogContent showCloseButton={false}>
           <DialogHeader>
@@ -79,9 +87,14 @@ export function FinishRegistration({ isOpen }: { isOpen: boolean }) {
                 name="height"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Height</FormLabel>
+                    <FormLabel>Height in cm</FormLabel>
                     <FormControl>
-                      <Input type="number" {...field} placeholder="Height" autoComplete="off" />
+                      <Input
+                        type="number"
+                        {...field}
+                        placeholder="example 180"
+                        autoComplete="off"
+                      />
                     </FormControl>
                   </FormItem>
                 )}
@@ -116,7 +129,9 @@ export function FinishRegistration({ isOpen }: { isOpen: boolean }) {
                           captionLayout="dropdown"
                           selected={field.value}
                           onSelect={field.onChange}
-                          disabled={(date) => date > new Date() || date < new Date("1900-01-01")}
+                          disabled={(date) =>
+                            date > new Date() || date < new Date("1900-01-01")
+                          }
                           initialFocus
                         />
                       </PopoverContent>

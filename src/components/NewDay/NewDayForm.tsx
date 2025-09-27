@@ -1,7 +1,9 @@
-import { useGetUserWorkoutLogs } from "@/hooks/Workout_Logs/useGetUserWorkoutLogs.hook";
 import { Button } from "../ui/button";
-import { postWorkoutLog, WorkoutLogType } from "@/services/workout_logs.service";
-import { getUserWorkoutSets } from "@/hooks/useGetWorkoutSets";
+import {
+  postWorkoutLog,
+  WorkoutLogType
+} from "@/services/workout_logs.service";
+import { useGetUserActiveWorkoutSet } from "@/hooks/useGetWorkoutSets";
 import { Skeleton } from "../ui/skeleton";
 import { WorkoutType } from "@/services/workoutSet";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
@@ -13,7 +15,7 @@ export function NewDayForm({
   lastWorkout: WorkoutLogType;
   closeModal: () => void;
 }) {
-  const workoutSet = getUserWorkoutSets();
+  const workoutSet = useGetUserActiveWorkoutSet();
   const queryClient = useQueryClient();
 
   const newWorkoutLogMutation = useMutation({
@@ -24,19 +26,34 @@ export function NewDayForm({
     }
   });
 
-  console.log(workoutSet.data);
-
-  if (!workoutSet.data || workoutSet.isPending) {
+  if (workoutSet.isPending) {
     return (
       <div className="space-y-4">
         <Skeleton className="h-6 w-3/4" /> {/* Para o título */}
         <div className="flex flex-row justify-between">
-          <Skeleton className="h-5 w-1/2" /> {/* Para o texto do próximo treino */}
-          <Skeleton className="h-10 w-10 rounded-md" /> {/* Para o botão de skip */}
+          <Skeleton className="h-5 w-1/2" />{" "}
+          {/* Para o texto do próximo treino */}
+          <Skeleton className="h-10 w-10 rounded-md" />{" "}
+          {/* Para o botão de skip */}
         </div>
         <div className="flex justify-center">
-          <Skeleton className="h-10 w-40 rounded-md" /> {/* Para o botão principal */}
+          <Skeleton className="h-10 w-40 rounded-md" />{" "}
+          {/* Para o botão principal */}
         </div>
+      </div>
+    );
+  }
+
+  if (!workoutSet.data) {
+    return (
+      <div className="text-center space-y-4">
+        <h2 className="text-lg font-semibold">No Workout Set Found</h2>
+        <p className="text-gray-600">
+          You need to create a workout set before starting your workouts.
+        </p>
+        <Button onClick={closeModal} className="w-fit">
+          Go to Profile
+        </Button>
       </div>
     );
   }
@@ -45,7 +62,8 @@ export function NewDayForm({
     (workout) => workout.id === lastWorkout.workoutId
   );
 
-  const indexOfNextWorkout = (indexOfLastWorkout + 1) % workoutSet.data.workouts.length;
+  const indexOfNextWorkout =
+    (indexOfLastWorkout + 1) % workoutSet.data.workouts.length;
 
   const nextWorkout: WorkoutType = workoutSet.data.workouts[indexOfNextWorkout];
 

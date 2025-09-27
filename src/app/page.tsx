@@ -7,31 +7,45 @@ import { WeightInfo } from "@/components/Weight/WeightInfo";
 import { TodayWorkoutInfo } from "@/components/Workout/TodayWorkoutInfo";
 
 import { AuthContext } from "@/context/AuthContext";
-import { useGetUser } from "@/hooks/useAuth";
-import { useGetUserWorkoutLogs } from "@/hooks/Workout_Logs/useGetUserWorkoutLogs.hook";
 import { useContext } from "react";
 
 export default function Home() {
   const context = useContext(AuthContext);
-  const data = useGetUser({ enabled: true });
 
   if (!context) {
-    return <div className="alert">No context</div>;
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <div className="text-2xl font-bold text-destructive mb-2">
+            Authentication Error
+          </div>
+          <div className="text-muted-foreground">Please log in to continue</div>
+        </div>
+      </div>
+    );
   }
 
   return (
-    <div className="px-10 pb-50">
-      <TodayWorkoutInfo />
-      <div className="mt-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 items-center justify-center">
-        <NewDay />
-        {/* <div className="flex gap-5"> */}
-        <MostRecentWorkoutDay />
-        <StreakDays />
-      </div>
-      {/* </div> */}
-      {/* --- */}
-      <div>
-        <WeightInfo />
+    <div className="min-h-screen bg-background">
+      <div className="container mx-auto px-4 py-12 max-w-7xl">
+        {/* Hero Section */}
+        <div className="mb-16">
+          <TodayWorkoutInfo />
+        </div>
+
+        {/* Main Grid Section */}
+        <div className="mb-20">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 items-start">
+            <NewDay />
+            <MostRecentWorkoutDay />
+            <StreakDays />
+          </div>
+        </div>
+
+        {/* Weight Progress Section */}
+        <div className="mb-12">
+          <WeightInfo />
+        </div>
       </div>
     </div>
   );
