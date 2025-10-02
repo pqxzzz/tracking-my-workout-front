@@ -8,8 +8,8 @@ export function MostRecentWorkoutDay() {
 
   if (workoutLog.isPending) {
     return (
-      <div className="w-full max-w-md mx-auto">
-        <div className="bg-gradient-to-br from-orange-600/20 to-red-600/20 border border-orange-500/30 rounded-xl p-6 text-center">
+      <div className="flex-1 flex flex-col">
+        <div className="bg-gradient-to-br from-orange-600/20 to-red-600/20 border border-orange-500/30 rounded-xl p-6 text-center h-full flex flex-col justify-center">
           <Skeleton className="h-6 w-48 mx-auto mb-4 rounded-md" />
           <Skeleton className="h-5 w-32 mx-auto rounded-md" />
         </div>
@@ -19,8 +19,8 @@ export function MostRecentWorkoutDay() {
 
   if (!workoutLog.data || !workoutLog.data.data.length) {
     return (
-      <div className="w-full max-w-md mx-auto">
-        <div className="bg-gradient-to-br from-orange-600/20 to-red-600/20 border border-orange-500/30 rounded-xl p-6 text-center">
+      <div className="flex-1 flex flex-col">
+        <div className="bg-gradient-to-br from-orange-600/20 to-red-600/20 border border-orange-500/30 rounded-xl p-6 text-center h-full flex flex-col justify-center">
           <div className="flex items-center justify-center gap-2 mb-4">
             <Dumbbell className="h-5 w-5 text-orange-400" />
             <h2 className="text-lg font-semibold text-foreground">
@@ -40,8 +40,8 @@ export function MostRecentWorkoutDay() {
     dateFns.format(new Date(), "dd/MM/yyyy");
 
   return (
-    <div className="w-full max-w-md mx-auto">
-      <div className="bg-gradient-to-br from-orange-600/20 to-red-600/20 border border-orange-500/30 rounded-xl p-6 text-center shadow-lg">
+    <div className="flex-1 flex flex-col">
+      <div className="bg-gradient-to-br from-orange-600/20 to-red-600/20 border border-orange-500/30 rounded-xl p-6 text-center shadow-lg h-full flex flex-col justify-center">
         <div className="flex items-center justify-center gap-2 mb-4">
           <Clock className="h-5 w-5 text-orange-400" />
           <h2 className="text-lg font-semibold text-foreground">
