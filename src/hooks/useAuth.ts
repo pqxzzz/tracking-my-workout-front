@@ -1,6 +1,7 @@
 // import { useAuthContext } from "@/context/AuthContext";
 import { AuthContext } from "@/context/AuthContext";
 import {
+  confirmEmail,
   finishUserRegistration,
   getUserData,
   loginUser,
@@ -97,6 +98,23 @@ export function useFinishRegister() {
     },
     onError: (err) => {
       console.error("error finishing registration: ", err);
+    }
+  });
+
+  return mutation;
+}
+
+export function useConfirmEmail() {
+  const queryClient = useQueryClient();
+
+  const mutation = useMutation({
+    mutationFn: confirmEmail,
+    onSuccess: (data) => {
+      console.log("Email confirmado: ", data);
+      queryClient.invalidateQueries({ queryKey: ["currentUser"] }); // busca novamente as infos do user quando termina o cadastro
+    },
+    onError: (err) => {
+      console.error("error confirming email: ", err);
     }
   });
 
