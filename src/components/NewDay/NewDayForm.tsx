@@ -7,6 +7,7 @@ import { useGetUserActiveWorkoutSet } from "@/hooks/useGetWorkoutSets";
 import { Skeleton } from "../ui/skeleton";
 import { WorkoutType } from "@/services/workoutSet";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useRouter } from "next/navigation";
 
 export function NewDayForm({
   lastWorkout,
@@ -17,6 +18,7 @@ export function NewDayForm({
 }) {
   const workoutSet = useGetUserActiveWorkoutSet();
   const queryClient = useQueryClient();
+  const router = useRouter();
 
   const newWorkoutLogMutation = useMutation({
     mutationFn: (workoutId: string) => postWorkoutLog(workoutId),
@@ -51,7 +53,7 @@ export function NewDayForm({
         <p className="text-gray-600">
           You need to create a workout set before starting your workouts.
         </p>
-        <Button onClick={closeModal} className="w-fit">
+        <Button onClick={() => router.push("/profile")} className="w-fit">
           Go to Profile
         </Button>
       </div>

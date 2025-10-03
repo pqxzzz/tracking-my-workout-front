@@ -13,6 +13,8 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Plus, Trash2, Dumbbell, Target, Settings, Save } from "lucide-react";
+import { usePostWorkoutSet } from "@/hooks/WorkoutSet/usePostWorkoutSet.hook";
+import { workoutSetBody } from "@/services/workoutSet.service";
 
 const formSchema = z.object({
   workoutSet: z.object({
@@ -47,11 +49,15 @@ const formSchema = z.object({
   })
 });
 
-export function ChangeWorkoutForm() {
-  return WorkoutSetForm();
+interface ChangeWorkoutFormProps {
+  onSuccess: () => void;
 }
 
-export const WorkoutSetForm = () => {
+export function ChangeWorkoutForm({ onSuccess }: ChangeWorkoutFormProps) {
+  return WorkoutSetForm({ onSuccess });
+}
+
+export const WorkoutSetForm = ({ onSuccess }: ChangeWorkoutFormProps) => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -85,9 +91,25 @@ export const WorkoutSetForm = () => {
     name: "workoutSet.workouts"
   });
 
-  const onSubmit = (values: z.infer<typeof formSchema>) => {
-    // create workoutset
-    console.log(values);
+  const mutation = usePostWorkoutSet();
+
+  const onSubmit = async (values: z.infer<typeof formSchema>) => {
+    try {
+      const payload: workoutSetBody = {
+        ...values.workoutSet,
+        workouts: values.workoutSet.workouts.map((workout) => ({
+          ...workout
+        }))
+      };
+
+      await mutation.mutateAsync(payload);
+      onSuccess();
+      form.reset();
+      // fechar modal
+      // TODO: toast de sucesso
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const onError = (fieldsErrors: FieldErrors<z.infer<typeof formSchema>>) => {
@@ -177,7 +199,15 @@ export const WorkoutSetForm = () => {
                           Series
                         </FormLabel>
                         <FormControl>
-                          <Input type="number" placeholder="3" {...field} />
+                          <Input
+                            type="text"
+                            inputMode="numeric"
+                            pattern="[0-9]*"
+                            max={16}
+                            maxLength={2}
+                            placeholder="3"
+                            {...field}
+                          />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -193,7 +223,15 @@ export const WorkoutSetForm = () => {
                           Repetitions
                         </FormLabel>
                         <FormControl>
-                          <Input type="number" placeholder="12" {...field} />
+                          <Input
+                            type="text"
+                            inputMode="numeric"
+                            pattern="[0-9]*"
+                            max={32}
+                            maxLength={2}
+                            placeholder="12"
+                            {...field}
+                          />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -209,7 +247,13 @@ export const WorkoutSetForm = () => {
                           Weight (kg)
                         </FormLabel>
                         <FormControl>
-                          <Input type="number" placeholder="50 kg" {...field} />
+                          <Input
+                            type="text"
+                            max={300}
+                            maxLength={12}
+                            placeholder="50 kg"
+                            {...field}
+                          />
                         </FormControl>
                         <FormMessage />
                       </FormItem>

@@ -17,8 +17,6 @@ export function NewDay() {
   const today = dateFns.format(new Date(), "dd/MM/yyyy");
   const workoutLogs = useGetUserWorkoutLogs(1, 1);
 
-  console.log("workoutLogs.data?.data ", workoutLogs.data?.data);
-
   const formattedDate =
     workoutLogs.data && workoutLogs.data.data.length > 0
       ? dateFns.format(workoutLogs.data.data[0].date, "dd/MM/yyyy")

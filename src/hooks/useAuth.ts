@@ -34,8 +34,6 @@ export function useLogin() {
 
   const context = useContext(AuthContext);
 
-  // const { setToken, setUser } = useAuthContext(); // <-- contexto de auth
-
   if (!context) {
     throw new Error("Context nao encontrado");
   }
@@ -91,7 +89,6 @@ export function useFinishRegister() {
   const mutation = useMutation({
     mutationFn: finishUserRegistration,
     onSuccess: (user) => {
-      console.log("USER FROM MUTATION: ", user);
       queryClient.setQueryData(["currentUser"], user);
 
       queryClient.invalidateQueries({ queryKey: ["currentUser"] }); // busca novamente as infos do user quando termina o cadastro
@@ -110,7 +107,6 @@ export function useConfirmEmail() {
   const mutation = useMutation({
     mutationFn: confirmEmail,
     onSuccess: (data) => {
-      console.log("Email confirmado: ", data);
       queryClient.invalidateQueries({ queryKey: ["currentUser"] }); // busca novamente as infos do user quando termina o cadastro
     },
     onError: (err) => {

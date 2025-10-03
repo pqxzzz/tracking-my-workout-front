@@ -33,7 +33,7 @@ export async function loginUser(
   dto: RegisterDTO
 ): Promise<{ access_token: string }> {
   const response = await api.post("/auth/login", dto);
-  console.log("VOU SETAR ACCESS TOKEN:", response.data.access_token);
+
   localStorage.setItem("access_token", response.data.access_token);
   return response.data;
 }
@@ -48,7 +48,7 @@ export async function finishUserRegistration(
 export async function confirmEmail(
   token: string
 ): Promise<{ message: string }> {
-  const response = await api.post(`/auth/confirm-email`, { token });
+  const response = await api.post(`/users/confirm-email`, { token });
   return response.data;
 }
 

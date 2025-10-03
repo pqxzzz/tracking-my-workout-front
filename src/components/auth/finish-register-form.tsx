@@ -1,7 +1,14 @@
 import { useFinishRegister } from "@/hooks/useAuth";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "../ui/dialog";
 import z from "zod";
-import { Form, FormControl, FormField, FormItem, FormLabel } from "../ui/form";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage
+} from "../ui/form";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Input } from "../ui/input";
@@ -22,8 +29,11 @@ const formSchema = z.object({
     .min(new Date("1930-01-01"), { message: "Date must be after 1930." })
     .max(new Date(new Date().setFullYear(new Date().getFullYear() - 10)), {
       message: "You must be at least 10 years old."
-    }), /// nao pode ser 10anos antes de hoje
-  height: z.coerce.number().min(100, { message: "Insert a valid height." })
+    }),
+  height: z.coerce
+    .number()
+    .min(100, { message: "Insert a valid height." })
+    .max(250, { message: "Insert a valid height." })
 });
 
 export function FinishRegistration({
@@ -39,9 +49,10 @@ export function FinishRegistration({
     resolver: zodResolver(formSchema),
     defaultValues: {
       username: "",
-      birthDate: new Date(),
-      height: 0
-    }
+      birthDate: undefined,
+      height: undefined
+    },
+    mode: "onSubmit"
   });
 
   function onSubmit(data: z.infer<typeof formSchema>) {
@@ -50,7 +61,7 @@ export function FinishRegistration({
       form.reset();
       setIsOpen(false);
     } catch (err) {
-      console.error(err);
+      console.log(err);
     }
   }
 
@@ -64,7 +75,7 @@ export function FinishRegistration({
           <Form {...form}>
             <form
               onSubmit={form.handleSubmit(onSubmit, (err) => {
-                console.error(err);
+                console.log(err);
               })}
               className="space-y-4"
               autoComplete="off"
@@ -78,6 +89,7 @@ export function FinishRegistration({
                     <FormControl>
                       <Input {...field} placeholder="Name" autoComplete="off" />
                     </FormControl>
+                    <FormMessage />
                   </FormItem>
                 )}
               />
@@ -90,12 +102,18 @@ export function FinishRegistration({
                     <FormLabel>Height in cm</FormLabel>
                     <FormControl>
                       <Input
-                        type="number"
-                        {...field}
+                        type="text"
                         placeholder="example 180"
                         autoComplete="off"
+                        inputMode="numeric"
+                        pattern="[0-9]*"
+                        max={250}
+                        maxLength={3}
+                        {...field}
+                        value={field.value ?? ""}
                       />
                     </FormControl>
+                    <FormMessage />
                   </FormItem>
                 )}
               />
@@ -117,7 +135,11 @@ export function FinishRegistration({
                         >
                           <CalendarIcon className="mr-2 h-4 w-4" />
                           {field.value ? (
-                            field.value.toLocaleDateString()
+                            new Intl.DateTimeFormat("en-GB", {
+                              day: "2-digit",
+                              month: "2-digit",
+                              year: "numeric"
+                            }).format(field.value)
                           ) : (
                             <span>Pick a date</span>
                           )}
@@ -127,12 +149,10 @@ export function FinishRegistration({
                         <Calendar
                           mode="single"
                           captionLayout="dropdown"
+                          fromYear={1930}
+                          toYear={new Date().getFullYear() - 10}
                           selected={field.value}
                           onSelect={field.onChange}
-                          disabled={(date) =>
-                            date > new Date() || date < new Date("1900-01-01")
-                          }
-                          initialFocus
                         />
                       </PopoverContent>
                     </Popover>

@@ -7,14 +7,7 @@ import { useEffect, useState } from "react";
 export default function OnBoardinggate() {
   // const context = useContext(AuthContext);
   const [isOpen, setIsOpen] = useState(false);
-
   const queryClient = useQueryClient();
-
-  // useEffect(() => {
-  //   if (context?.user && !context?.user?.username) {
-  //     setIsOpen(true);
-  //   }
-  // }, [context?.user]);
 
   useEffect(() => {
     // melhor fzr com o queryclient ou contexto???
