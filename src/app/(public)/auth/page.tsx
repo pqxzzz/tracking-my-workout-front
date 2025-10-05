@@ -12,6 +12,8 @@ export default function Auth() {
 
   const emailConfirmed = params.get("email-confirmed");
 
+  const justRegistered = params.get("registered");
+
   return (
     <div className="flex h-full">
       <div className="hidden md:flex w-1/2 bg-neutral-800 h-screen items-center justify-center">
@@ -26,6 +28,13 @@ export default function Auth() {
               E-mail confirmed! You can now log in.
             </div>
           )}
+          {justRegistered && (
+            <div className="p-4 mb-4 text-sm text-green-800 rounded-lg bg-green-50 ">
+              Registration successful! Please check your email to confirm your
+              address.
+            </div>
+          )}
+
           <Button
             variant="link"
             className="underline w-fit"
@@ -35,7 +44,7 @@ export default function Auth() {
           >
             {newUser ? "Login" : "Register"}
           </Button>
-          {newUser ? <RegisterForm /> : <LoginForm />}
+          {newUser && !justRegistered ? <RegisterForm /> : <LoginForm />}
         </div>
       </div>
     </div>
