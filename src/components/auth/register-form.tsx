@@ -40,14 +40,16 @@ export function RegisterForm() {
     }
   });
 
-  const { mutateAsync, isPending, isSuccess } = useRegister();
+  const { mutateAsync, isPending } = useRegister();
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
       await mutateAsync({ email: values.email, password: values.password });
 
       router.push("?registered=true");
-    } catch (error) {}
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
