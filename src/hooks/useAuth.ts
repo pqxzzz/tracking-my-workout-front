@@ -106,7 +106,7 @@ export function useConfirmEmail() {
 
   const mutation = useMutation({
     mutationFn: confirmEmail,
-    onSuccess: (data) => {
+    onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["currentUser"] }); // busca novamente as infos do user quando termina o cadastro
     },
     onError: (err) => {

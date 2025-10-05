@@ -129,7 +129,7 @@ export default function ProfilePage() {
               No Active Workout Set
             </h2>
             <p className="text-muted-foreground mb-6">
-              You don't have an active workout set. Please create one to start
+              You do not have an active workout set. Please create one to start
               tracking your workouts.
             </p>
           </div>

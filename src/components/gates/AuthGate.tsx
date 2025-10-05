@@ -1,8 +1,7 @@
 "use client";
 import { Skeleton } from "@/components/ui/skeleton";
 import { AuthContext } from "@/context/AuthContext";
-import { useConfirmEmail } from "@/hooks/useAuth";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useContext, useEffect } from "react";
 
 export function AuthGate({ children }: { children: React.ReactNode }) {

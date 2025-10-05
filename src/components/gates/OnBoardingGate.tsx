@@ -1,5 +1,6 @@
 "use client";
 import { FinishRegistration } from "@/components/auth/finish-register-form";
+import { User } from "@/services/auth";
 
 import { useQueryClient } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
@@ -11,8 +12,8 @@ export default function OnBoardinggate() {
 
   useEffect(() => {
     // melhor fzr com o queryclient ou contexto???
-    const user = queryClient.getQueryData(["currentUser"]);
-    if (user && !(user as any).username) {
+    const user = queryClient.getQueryData(["currentUser"]) as User;
+    if (user && user.username) {
       setIsOpen(true);
     }
   }, [queryClient]);
