@@ -1,5 +1,6 @@
 import { AuthProvider } from "@/context/AuthContext";
 import { Providers } from "../../context/providers";
+import { Suspense } from "react";
 
 export const metadata = {
   title: "Next.js",
@@ -14,9 +15,11 @@ export default function RootLayout({
   return (
     // <html lang="en">
     //   <body>
-    <Providers>
-      <AuthProvider>{children}</AuthProvider>
-    </Providers>
+    <Suspense fallback={<div>Loading...</div>}>
+      <Providers>
+        <AuthProvider>{children}</AuthProvider>
+      </Providers>
+    </Suspense>
     //   </body>
     // </html>
   );
