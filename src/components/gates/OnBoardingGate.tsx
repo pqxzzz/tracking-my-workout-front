@@ -13,7 +13,7 @@ export default function OnBoardinggate() {
   useEffect(() => {
     // melhor fzr com o queryclient ou contexto???
     const user = queryClient.getQueryData(["currentUser"]) as User;
-    if (user && user.username) {
+    if (user && !user.username) {
       setIsOpen(true);
     }
   }, [queryClient]);
