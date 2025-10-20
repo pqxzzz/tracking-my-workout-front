@@ -1,5 +1,6 @@
 name: GitHub Actions Validation 1.0
 run-name: ${{ github.actor }} is running GitHub Actions Validation 1.0
+
 on:
   push:
     branches:
@@ -7,22 +8,28 @@ on:
   pull_request:
     branches:
       - main
+
 jobs:
   Explore-GitHub-Actions:
     runs-on: ubuntu-latest
     steps:
-    - name: Check out repository code #this step is required to access the repository code
-      uses: actions/checkout@v5
+      - name: Check out repository code # this step is required to access the repository code
+        uses: actions/checkout@v5
 
-    - name: Set up Node.js
-    uses: actions/setup-node@v4
-    with: 
-      node-version: '20'
-      cache: 'npm'
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
 
-    run: npm install
-    run: npm run lint
-    run: npm run build
-    run: echo "This job's status is ${{ job.status }}"
-    
+      - name: Install dependencies
+        run: npm install
 
+      - name: Run lint
+        run: npm run lint
+
+      - name: Run build
+        run: npm run build
+
+      - name: Echo job status
+        run: echo "This job's status is ${{ job.status }}"
