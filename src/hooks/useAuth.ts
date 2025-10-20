@@ -13,6 +13,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { AxiosError } from "axios";
 import { useRouter } from "next/navigation";
 import { useContext } from "react";
+import { toast } from "sonner";
 
 export function useRegister() {
   const queryClient = useQueryClient(); //
@@ -54,6 +55,7 @@ export function useLogin() {
     },
     onError: (error) => {
       console.error("Erro ao logar: ", error);
+      toast.error("Error logging in. Please check your credentials.");
     }
   });
 }
@@ -95,6 +97,7 @@ export function useFinishRegister() {
     },
     onError: (err) => {
       console.error("error finishing registration: ", err);
+      toast.error("Error finishing registration. Please try again.");
     }
   });
 
@@ -111,6 +114,7 @@ export function useConfirmEmail() {
     },
     onError: (err) => {
       console.error("error confirming email: ", err);
+      toast.error("Error confirming email. Please try again.");
     }
   });
 
