@@ -108,7 +108,7 @@ export const WorkoutSetForm = ({ onSuccess }: ChangeWorkoutFormProps) => {
       // fechar modal
       // TODO: toast de sucesso
     } catch (error) {
-      console.log("erro!");
+      console.log("error: ", error);
     }
   };
 
