@@ -28,9 +28,7 @@ export default async function WorkoutPage({
   return (
     <div className="p-6">
       <h1 className="text-2xl font-bold mb-4">{workout.name}</h1>
-      <p className="text-sm text-muted-foreground mb-6">
-        Criado em: {new Date(workout.createdAt).toLocaleDateString()}
-      </p>
+      <p className="text-sm text-muted-foreground mb-6">Criado em:</p>
 
       <Table>
         <TableCaption>Lista de exercícios do {workout.name}</TableCaption>

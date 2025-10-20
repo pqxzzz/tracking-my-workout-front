@@ -1,7 +1,7 @@
 import { api } from "./axios";
 
 export interface ExerciseType {
-  id: string;
+  id?: string;
   name: string;
   information: string;
   series: number;
@@ -15,16 +15,16 @@ export interface ExerciseType {
 }
 
 export interface WorkoutType {
-  id: string;
+  id?: string;
   name: string;
-  createdAt: string;
+  createdAt?: string;
   exercises: ExerciseType[];
 }
 
 export interface WorkoutSetType {
   id: string;
   name: string;
-  createdAt: string;
+  createdAt?: string;
   updatedAt: string;
   workouts: WorkoutType[];
 }

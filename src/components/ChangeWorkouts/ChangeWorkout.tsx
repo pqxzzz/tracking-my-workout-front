@@ -2,11 +2,14 @@ import { DialogTitle } from "@radix-ui/react-dialog";
 import { Dialog, DialogContent, DialogTrigger } from "../ui/dialog";
 import { ChangeWorkoutForm } from "./ChangeWorkoutForm";
 import { Plus, Dumbbell } from "lucide-react";
+import { useState } from "react";
 
 export function ChangeWorkout() {
+  const [isOpen, setIsOpen] = useState(false);
+
   return (
     <div>
-      <Dialog>
+      <Dialog open={isOpen} onOpenChange={setIsOpen}>
         <DialogTrigger className="group w-full bg-gradient-to-br from-purple-600/20 to-pink-600/20 border border-purple-500/30 hover:border-purple-400/50 rounded-xl p-6 transition-all duration-300 hover:shadow-lg hover:shadow-purple-500/20 hover:-translate-y-1 cursor-pointer">
           <div className="flex items-center gap-4">
             <div className="p-3 bg-purple-500/20 rounded-full group-hover:bg-purple-500/30 transition-colors">
@@ -28,7 +31,7 @@ export function ChangeWorkout() {
           <DialogTitle className="text-2xl font-bold text-center mb-6">
             Create Your New Workout Set
           </DialogTitle>
-          <ChangeWorkoutForm />
+          <ChangeWorkoutForm onSuccess={() => setIsOpen(false)} />
         </DialogContent>
       </Dialog>
     </div>

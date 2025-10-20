@@ -123,6 +123,18 @@ export default function ProfilePage() {
           </div>
         )}
 
+        {!workoutSetInfo.data && (
+          <div className="mb-12 text-center">
+            <h2 className="text-2xl font-bold text-foreground mb-4">
+              No Active Workout Set
+            </h2>
+            <p className="text-muted-foreground mb-6">
+              You do not have an active workout set. Please create one to start
+              tracking your workouts.
+            </p>
+          </div>
+        )}
+
         {/* Change Workout Section */}
         <div className="border-t border-border pt-8">
           <div className="flex items-center gap-3 mb-6">

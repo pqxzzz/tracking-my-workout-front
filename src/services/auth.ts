@@ -29,15 +29,26 @@ export async function registerUser(dto: RegisterDTO): Promise<User> {
   return response.data;
 }
 
-export async function loginUser(dto: RegisterDTO): Promise<{ access_token: string }> {
+export async function loginUser(
+  dto: RegisterDTO
+): Promise<{ access_token: string }> {
   const response = await api.post("/auth/login", dto);
-  console.log("VOU SETAR ACCESS TOKEN:", response.data.access_token);
+
   localStorage.setItem("access_token", response.data.access_token);
   return response.data;
 }
 
-export async function finishUserRegistration(dto: FinishUserRegisterDTO): Promise<User> {
+export async function finishUserRegistration(
+  dto: FinishUserRegisterDTO
+): Promise<User> {
   const response = await api.patch("/users/finish-registration", dto);
+  return response.data;
+}
+
+export async function confirmEmail(
+  token: string
+): Promise<{ message: string }> {
+  const response = await api.post(`/users/confirm-email`, { token });
   return response.data;
 }
 

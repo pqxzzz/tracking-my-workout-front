@@ -39,16 +39,43 @@ export const TodayWorkoutInfo = () => {
     );
   }
 
-  if (!workoutLog.data) {
+  if (
+    !workoutLog.data ||
+    !workoutLog.data.data ||
+    workoutLog.data.data.length === 0
+  ) {
+    const firstWorkout: WorkoutType = workoutSet.data.workouts[0];
+
     return (
       <div className="w-full max-w-md mx-auto">
-        <Skeleton className="h-20 w-full rounded-xl" />
+        <Link
+          href={`./workout/${firstWorkout.id}`}
+          className="group block bg-gradient-to-br from-green-600/20 to-emerald-600/20 border border-green-500/30 hover:border-green-400/50 rounded-xl p-6 transition-all duration-300 hover:shadow-lg hover:shadow-green-500/20 hover:-translate-y-1"
+        >
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              <div className="p-2 bg-green-500/20 rounded-lg group-hover:bg-green-500/30 transition-colors">
+                <Dumbbell className="h-5 w-5 text-green-400" />
+              </div>
+              <div>
+                <p className="text-sm text-muted-foreground font-medium">
+                  Start Your Journey
+                </p>
+                <p className="text-lg font-semibold text-foreground group-hover:text-green-400 transition-colors">
+                  {firstWorkout.name}
+                </p>
+              </div>
+            </div>
+            <ArrowRight className="h-5 w-5 text-green-400 group-hover:translate-x-1 transition-transform" />
+          </div>
+        </Link>
       </div>
     );
   }
 
+  const lastWorkoutLog = workoutLog.data.data[0];
   const indexOfLastWorkout = workoutSet.data.workouts.findIndex(
-    (workout) => workout.id === workoutLog.data.data[0].workoutId
+    (workout) => workout.id === lastWorkoutLog.workoutId
   );
 
   const indexOfNextWorkout =

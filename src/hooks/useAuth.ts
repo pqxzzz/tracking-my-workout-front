@@ -1,6 +1,7 @@
 // import { useAuthContext } from "@/context/AuthContext";
 import { AuthContext } from "@/context/AuthContext";
 import {
+  confirmEmail,
   finishUserRegistration,
   getUserData,
   loginUser,
@@ -12,6 +13,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { AxiosError } from "axios";
 import { useRouter } from "next/navigation";
 import { useContext } from "react";
+import { toast } from "sonner";
 
 export function useRegister() {
   const queryClient = useQueryClient(); //
@@ -33,8 +35,6 @@ export function useLogin() {
 
   const context = useContext(AuthContext);
 
-  // const { setToken, setUser } = useAuthContext(); // <-- contexto de auth
-
   if (!context) {
     throw new Error("Context nao encontrado");
   }
@@ -55,6 +55,7 @@ export function useLogin() {
     },
     onError: (error) => {
       console.error("Erro ao logar: ", error);
+      toast.error("Error logging in. Please check your credentials.");
     }
   });
 }
@@ -90,13 +91,30 @@ export function useFinishRegister() {
   const mutation = useMutation({
     mutationFn: finishUserRegistration,
     onSuccess: (user) => {
-      console.log("USER FROM MUTATION: ", user);
       queryClient.setQueryData(["currentUser"], user);
 
       queryClient.invalidateQueries({ queryKey: ["currentUser"] }); // busca novamente as infos do user quando termina o cadastro
     },
     onError: (err) => {
       console.error("error finishing registration: ", err);
+      toast.error("Error finishing registration. Please try again.");
+    }
+  });
+
+  return mutation;
+}
+
+export function useConfirmEmail() {
+  const queryClient = useQueryClient();
+
+  const mutation = useMutation({
+    mutationFn: confirmEmail,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["currentUser"] }); // busca novamente as infos do user quando termina o cadastro
+    },
+    onError: (err) => {
+      console.error("error confirming email: ", err);
+      toast.error("Error confirming email. Please try again.");
     }
   });
 

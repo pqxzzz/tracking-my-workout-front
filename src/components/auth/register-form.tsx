@@ -13,6 +13,7 @@ import { z } from "zod";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { useRegister } from "@/hooks/useAuth";
+import { useRouter } from "next/navigation";
 
 const formSchema = z
   .object({
@@ -29,6 +30,7 @@ const formSchema = z
   });
 
 export function RegisterForm() {
+  const router = useRouter();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -38,10 +40,16 @@ export function RegisterForm() {
     }
   });
 
-  const { mutate, isPending } = useRegister();
+  const { mutateAsync, isPending } = useRegister();
 
-  const onSubmit = (values: z.infer<typeof formSchema>) => {
-    mutate({ email: values.email, password: values.password });
+  const onSubmit = async (values: z.infer<typeof formSchema>) => {
+    try {
+      await mutateAsync({ email: values.email, password: values.password });
+
+      router.push("?registered=true");
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (

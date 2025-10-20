@@ -10,11 +10,8 @@ export function StreakDays() {
 
   if (workoutLog.isPending || !workoutLog.data) {
     return (
-      <div className="w-full max-w-md mx-auto">
-        <div className="text-center mb-4">
-          <Skeleton className="h-6 w-32 mx-auto rounded-md" />
-        </div>
-        <div className="bg-gradient-to-br from-yellow-600/20 to-orange-600/20 border border-yellow-500/30 rounded-xl p-6">
+      <div className="flex-1 flex flex-col">
+        <div className="bg-gradient-to-br from-yellow-600/20 to-orange-600/20 border border-yellow-500/30 rounded-xl p-6 h-full flex flex-col justify-center">
           <div className="flex justify-center gap-3">
             {[...Array(7)].map((_, i) => (
               <Skeleton key={i} className="h-12 w-12 rounded-full" />
@@ -41,8 +38,8 @@ export function StreakDays() {
   const currentStreak = streakLast7Days.filter((day) => day.isCheck).length;
 
   return (
-    <div className="w-full max-w-md mx-auto">
-      <div className="bg-gradient-to-br from-yellow-600/20 to-orange-600/20 border border-yellow-500/30 rounded-xl p-6 shadow-lg">
+    <div className="flex-1 flex flex-col">
+      <div className="bg-gradient-to-br from-yellow-600/20 to-orange-600/20 border border-yellow-500/30 rounded-xl p-6 shadow-lg h-full flex flex-col justify-center">
         <div className="text-center mb-4">
           <div className="flex items-center justify-center gap-2 mb-2">
             <Flame className="h-5 w-5 text-yellow-400" />

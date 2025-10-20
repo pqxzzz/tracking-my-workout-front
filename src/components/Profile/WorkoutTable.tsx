@@ -45,7 +45,7 @@ export function WorkoutTable({ Workout }: { Workout: WorkoutType }) {
         {Workout.exercises.map((exercise) => (
           <div
             key={exercise.id}
-            onClick={() => openEditExerciseModal(exercise.id)}
+            onClick={() => openEditExerciseModal(exercise.id ?? "")}
             className="group flex items-center justify-between p-3 bg-muted/30 rounded-lg hover:bg-muted/50 cursor-pointer transition-all duration-200 hover:shadow-md"
           >
             <div className="flex items-center gap-3">

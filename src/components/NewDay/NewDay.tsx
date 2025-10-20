@@ -17,15 +17,15 @@ export function NewDay() {
   const today = dateFns.format(new Date(), "dd/MM/yyyy");
   const workoutLogs = useGetUserWorkoutLogs(1, 1);
 
-  console.log("workoutLogs.data?.data ", workoutLogs.data?.data);
-
   const formattedDate =
     workoutLogs.data && workoutLogs.data.data.length > 0
       ? dateFns.format(workoutLogs.data.data[0].date, "dd/MM/yyyy")
       : null;
 
+  const hasWorkoutLogs = workoutLogs.data && workoutLogs.data.data.length > 0;
+
   return (
-    <div className="w-full max-w-md mx-auto">
+    <div className="flex-1 flex flex-col">
       {today === formattedDate && (
         <div className="bg-gradient-to-br from-green-600/20 to-emerald-600/20 border border-green-500/30 rounded-xl p-6 text-center shadow-lg">
           <div className="flex items-center justify-center gap-3 mb-3">
@@ -41,19 +41,23 @@ export function NewDay() {
         </div>
       )}
 
-      {workoutLogs.data && today !== formattedDate && (
+      {today !== formattedDate && (
         <Dialog open={open} onOpenChange={setOpen}>
-          <DialogTrigger className="group w-full bg-gradient-to-br from-purple-600/20 to-pink-600/20 border border-purple-500/30 hover:border-purple-400/50 rounded-xl p-6 transition-all duration-300 hover:shadow-lg hover:shadow-purple-500/20 hover:-translate-y-1 cursor-pointer">
+          <DialogTrigger className="group w-full h-full bg-gradient-to-br from-purple-600/20 to-pink-600/20 border border-purple-500/30 hover:border-purple-400/50 rounded-xl p-6 transition-all duration-300 hover:shadow-lg hover:shadow-purple-500/20 hover:-translate-y-1 cursor-pointer flex flex-col justify-center">
             <div className="flex flex-col items-center gap-4 text-center">
               <div className="p-3 bg-purple-500/20 rounded-full group-hover:bg-purple-500/30 transition-colors">
                 <Plus className="h-8 w-8 text-purple-400" />
               </div>
               <div>
                 <h2 className="text-xl font-bold text-foreground group-hover:text-purple-400 transition-colors">
-                  Register New Workout Day!
+                  {hasWorkoutLogs
+                    ? "Register New Workout Day!"
+                    : "Start Your First Workout!"}
                 </h2>
                 <p className="text-sm text-muted-foreground mt-1">
-                  Track your progress and stay consistent
+                  {hasWorkoutLogs
+                    ? "Track your progress and stay consistent"
+                    : "Begin your fitness journey today"}
                 </p>
               </div>
             </div>
@@ -61,10 +65,12 @@ export function NewDay() {
           <DialogContent className="max-w-md">
             <DialogTitle className="flex items-center gap-2 text-xl font-bold">
               <Calendar className="h-5 w-5 text-purple-400" />
-              Register New Workout Day!
+              {hasWorkoutLogs
+                ? "Register New Workout Day!"
+                : "Start Your First Workout!"}
             </DialogTitle>
             <NewDayForm
-              lastWorkout={workoutLogs.data.data[0]}
+              lastWorkout={hasWorkoutLogs ? workoutLogs.data.data[0] : null}
               closeModal={() => setOpen(false)}
             />
           </DialogContent>

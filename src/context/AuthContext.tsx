@@ -48,8 +48,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const {
     data: userData,
     isLoading,
-    error,
-    failureCount
+    error
   } = useGetUser({
     enabled: true
   });
@@ -72,9 +71,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     <AuthContext.Provider
       value={{ token, setToken, user, setUser, isLoading, authReady }}
     >
-      <h1 className="bg-red-800 text-white font-bold text-2xl">
-        {failureCount} -{error ? "teve erro" : "sem erro"}
-      </h1>
       {children}
     </AuthContext.Provider>
   );

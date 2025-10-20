@@ -2,7 +2,6 @@ import { WorkoutType } from "./workoutSet";
 
 export async function getWorkoutById(id: string): Promise<WorkoutType> {
   try {
-    console.log(`${process.env.NEXT_PUBLIC_API_URL}/workouts/${id}`);
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_API_URL}workouts/${id}`,
       {
@@ -14,7 +13,6 @@ export async function getWorkoutById(id: string): Promise<WorkoutType> {
     );
 
     if (!response.ok) {
-      console.log("resposta!!!", response.statusText);
       throw new Error(`Erro na requisição: ${response.status}`);
     }
 

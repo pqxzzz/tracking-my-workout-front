@@ -35,7 +35,7 @@ export default function Home() {
 
         {/* Main Grid Section */}
         <div className="mb-20">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 items-start">
+          <div className="flex flex-col md:flex-row lg:flex-row gap-8 h-full">
             <NewDay />
             <MostRecentWorkoutDay />
             <StreakDays />

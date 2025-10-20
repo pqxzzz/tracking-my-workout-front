@@ -7,16 +7,18 @@ import { useGetUserActiveWorkoutSet } from "@/hooks/useGetWorkoutSets";
 import { Skeleton } from "../ui/skeleton";
 import { WorkoutType } from "@/services/workoutSet";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useRouter } from "next/navigation";
 
 export function NewDayForm({
   lastWorkout,
   closeModal
 }: {
-  lastWorkout: WorkoutLogType;
+  lastWorkout: WorkoutLogType | null;
   closeModal: () => void;
 }) {
   const workoutSet = useGetUserActiveWorkoutSet();
   const queryClient = useQueryClient();
+  const router = useRouter();
 
   const newWorkoutLogMutation = useMutation({
     mutationFn: (workoutId: string) => postWorkoutLog(workoutId),
@@ -51,19 +53,21 @@ export function NewDayForm({
         <p className="text-gray-600">
           You need to create a workout set before starting your workouts.
         </p>
-        <Button onClick={closeModal} className="w-fit">
+        <Button onClick={() => router.push("/profile")} className="w-fit">
           Go to Profile
         </Button>
       </div>
     );
   }
 
-  const indexOfLastWorkout = workoutSet.data.workouts.findIndex(
-    (workout) => workout.id === lastWorkout.workoutId
-  );
-
-  const indexOfNextWorkout =
-    (indexOfLastWorkout + 1) % workoutSet.data.workouts.length;
+  // If no last workout, start with the first workout
+  const indexOfNextWorkout = lastWorkout
+    ? (workoutSet.data.workouts.findIndex(
+        (workout) => workout.id === lastWorkout.workoutId
+      ) +
+        1) %
+      workoutSet.data.workouts.length
+    : 0;
 
   const nextWorkout: WorkoutType = workoutSet.data.workouts[indexOfNextWorkout];
 
@@ -79,23 +83,39 @@ export function NewDayForm({
     //fechar modal no onsuccess?
   };
   return (
-    <div>
-      <div className="flex justify-between">
-        <h1>
-          Your last workout was: <span>{lastWorkout.workout.name}</span>
-        </h1>
-      </div>
-      <div className="flex flex-row justify-between">
+    <div className="space-y-4">
+      {lastWorkout && (
+        <div className="flex justify-between">
+          <h1>
+            Your last workout was:{" "}
+            <span className="font-semibold">{lastWorkout.workout.name}</span>
+          </h1>
+        </div>
+      )}
+
+      <div className="flex flex-row justify-between items-center">
         <h1 className="text-lg">
-          Your next workout is supposed to be: <span>{nextWorkout.name}</span>
+          {lastWorkout
+            ? `Your next workout is supposed to be:`
+            : `Let's start with your first workout:`}{" "}
+          <span className="font-semibold text-purple-400">
+            {nextWorkout.name}
+          </span>
         </h1>
-        <Button variant="outline" className="w-fit" onClick={handleSkipWorkout}>
-          <p> ⏩ </p>
-        </Button>
+        {lastWorkout && (
+          <Button
+            variant="outline"
+            className="w-fit"
+            onClick={handleSkipWorkout}
+          >
+            <p> ⏩ </p>
+          </Button>
+        )}
       </div>
+
       <div className="flex justify-center">
         <Button className="w-fit" onClick={handleCompleteWorkout}>
-          Complete workout!
+          {lastWorkout ? "Complete workout!" : "Start your first workout!"}
         </Button>
       </div>
     </div>
