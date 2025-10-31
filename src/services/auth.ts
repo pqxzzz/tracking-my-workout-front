@@ -65,3 +65,9 @@ export async function getUserData(): Promise<User> {
     // throw new Error("Couldn't find user info");
   }
 }
+
+// Google OAuth
+export async function authWithGoogle() {
+  const response = await api.get("/auth/google");
+  return response.data;
+}
