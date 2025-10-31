@@ -113,7 +113,7 @@ export function useConfirmEmail() {
       queryClient.invalidateQueries({ queryKey: ["currentUser"] }); // busca novamente as infos do user quando termina o cadastro
     },
     onError: (err) => {
-      console.error("error confirming email: ", err);
+      console.error("err confirming email: ", err);
       toast.error("Error confirming email. Please try again.");
     }
   });
