@@ -8,14 +8,16 @@ import {
 } from "@/components/ui/popover";
 import { Button } from "../ui/button";
 import Link from "next/link";
-import { CircleUser, Dumbbell, LogOut, User, Settings } from "lucide-react";
+import { CircleUser, Dumbbell, LogOut, User, Settings, Moon, Sun } from "lucide-react";
 import { usePathname } from "next/navigation";
 import { useGetUser, useLogout } from "@/hooks/useAuth";
+import { useTheme } from "@/context/ThemeContext";
 
 export function Header() {
   const context = useContext(AuthContext);
   const pathname = usePathname();
   const logout = useLogout();
+  const { theme, toggleTheme } = useTheme();
 
   const user = useGetUser();
 
@@ -41,8 +43,25 @@ export function Header() {
               </h1>
             </Link>
 
-            {/* User Menu */}
-            <Popover>
+            {/* Right Section: Theme Toggle + User Menu */}
+            <div className="flex items-center gap-2">
+              {/* Theme Toggle Button */}
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={toggleTheme}
+                className="relative h-10 w-10 rounded-full border border-border/50 hover:border-border hover:bg-accent/50 transition-all duration-200"
+              >
+                {theme === "dark" ? (
+                  <Sun className="h-5 w-5 text-foreground/70" />
+                ) : (
+                  <Moon className="h-5 w-5 text-foreground/70" />
+                )}
+                <span className="sr-only">Toggle theme</span>
+              </Button>
+
+              {/* User Menu */}
+              <Popover>
               <PopoverTrigger asChild>
                 <Button
                   variant="ghost"
@@ -100,6 +119,7 @@ export function Header() {
                 </div>
               </PopoverContent>
             </Popover>
+            </div>
           </div>
         </div>
       </header>
