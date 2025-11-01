@@ -100,7 +100,7 @@ export default function ProfilePage() {
                       <p className="text-sm text-muted-foreground">
                         Member Since
                       </p>
-                      <p className="font-semibold">2025*</p>
+                      {/* <p className="font-semibold">2025*</p> */}
                     </div>
                   </div>
                 </div>
