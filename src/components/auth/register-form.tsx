@@ -119,7 +119,7 @@ export function RegisterForm() {
             </Button>
 
             <Button variant={"link"} type="button" disabled={isPending}>
-              <p>Already have an account</p>
+              <p className="italic">Already have an account</p>
             </Button>
           </div>
         </form>
