@@ -31,7 +31,7 @@ export function NewDay() {
           <div className="flex items-center justify-center gap-3 mb-3">
             <Trophy className="h-6 w-6 text-green-400" />
             <h3 className="text-lg font-semibold text-foreground">
-              Congratulations!
+              Congratulations!!!
             </h3>
           </div>
           <p className="text-foreground/80">
